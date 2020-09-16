@@ -1,0 +1,54 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<PreferenceCategory app:title="@string/setting_network_header">
+
+		<ListPreference
+			app:defaultValue="konachan.com"
+			app:entries="@array/domain_entries"
+			app:entryValues="@array/domain_values"
+			app:key="konachan-domain"
+			app:title="Default Domain"
+			app:useSimpleSummaryProvider="true">
+
+		</ListPreference>
+
+		<CheckBoxPreference
+			app:defaultValue="true"
+			app:key="https"
+			app:title="Use HTTPS" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory app:title="@string/setting_caching_header">
+
+		<CheckBoxPreference
+			app:defaultValue="true"
+			app:key="useCache"
+			app:title="UseCache" />
+
+		<SwitchPreferenceCompat
+			app:key="ram_cache"
+			app:dependency="useCache"
+			app:summaryOff="@string/ram_disk_summary_off"
+			app:summaryOn="@string/ram_disk_summary_on"
+			app:title="@string/ram_cache_title" />
+
+		<SwitchPreferenceCompat
+			app:key="disk_cache"
+			app:summaryOff="@string/disk_cache_summary_off"
+			app:summaryOn="@string/disk_cache_summary_on"
+			app:title="@string/disk_cache_attachment" />
+
+		<SeekBarPreference
+			android:title=""
+			app:dependency="disk_cache"
+			app:key="disk_cache_seekbar" />
+
+		<Preference
+			android:layout="@layout/clear_button"
+			android:key="loginButtons" />
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,33 @@
+<resources>
+	<!-- Reply Preference -->
+	<string-array name="reply_entries">
+		<item>Reply</item>
+		<item>Reply to all</item>
+	</string-array>
+
+	<string-array name="reply_values">
+		<item>reply</item>
+		<item>reply_all</item>
+	</string-array>
+
+
+	<string-array name="domain_values">
+		<item>konachan.com</item>
+		<item>konachan.net</item>
+	</string-array>
+
+	<string-array name="domain_entries">
+		<item>Konachan.com</item>
+		<item>Konachan.net</item>
+	</string-array>
+	<string-array name="tag_colors">
+		<item>@color/tag_color_general</item>
+		<item>@color/tag_color_artist</item>
+		<item>@color/tag_color_style</item>
+		<item>@color/tag_color_copyright</item>
+		<item>@color/tag_color_character</item>
+		<item>@color/tag_color_circle</item>
+		<item>@color/tag_color_any</item>
+	</string-array>
+
+</resources>

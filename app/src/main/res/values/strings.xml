@@ -1,0 +1,68 @@
+<resources>
+	<string name="app_name">KonaChan</string>
+	<string name="app_description">Image</string>
+
+	<string name="action_settings">Settings</string>
+	<string name="title_activity_settings">Settings</string>
+
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+	<string name="navigation_drawer_close">Close navigation drawer</string>
+
+	<!-- Preference Titles -->
+	<string name="setting_network_header">Network</string>
+	<string name="setting_caching_header">Caching</string>
+
+	<!-- Messages Preferences -->
+	<string name="title_signature">Your signature</string>
+	<string name="title_reply">Default reply action</string>
+
+	<!-- Sync Preferences -->
+	<string name="ram_cache_title">Use RAM Cache</string>
+	<string name="disk_cache_attachment">Download incoming attachments</string>
+	<string name="disk_cache_summary_on">Automatically download attachments for incoming emails
+	</string>
+	<string name="disk_cache_summary_off">Only download attachments when manually requested</string>
+
+	<string name="menu_favorite">Favorite</string>
+	<string name="menu_history">History</string>
+	<string name="menu_settings">Settings</string>
+
+	<string name="cannot_open_database">Bad</string>
+	<string name="title_activity_main">MainActivity</string>
+	<string name="nav_header_title">KonaChan</string>
+	<string name="nav_header_subtitle">android.studio@android.com</string>
+	<string name="nav_header_desc">Navigation header</string>
+
+	<string name="search_hint">cat</string>
+	<string name="title_search">search</string>
+	<string name="image_desc">image_desc</string>
+	<string name="path_search" />
+
+	<string name="favorites">Favorites</string>
+	<string name="add_favr">Added to Favorites</string>
+	<string name="remove_favr">Removed from Favorites</string>
+	<string name="no_favorites_items">No Favorites</string>
+	<string name="no_favorites_msg">Long press on item to add to favorites.</string>
+	<string name="favorites_remove_msg">Long press on item to remove from favorites.</string>
+	<string name="tooltip_action_bookmark">Set image as a local favorite</string>
+	<string name="ram_disk_summary_on">RAM cache will be used</string>
+	<string name="ram_disk_summary_off">RAM cache will not be used.</string>
+	<string name="settings_description">hello world</string>
+	<string name="search_label">cat</string>
+	<string name="download_image">Image Saved to local storage.</string>
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="title_activity_user_saving">MainActivity</string>
+	<string name="title_home">Home</string>
+	<string name="title_dashboard">Dashboard</string>
+	<string name="title_notifications">Notifications</string>
+	<string name="refresh">Refresh</string>
+	<string name="action_wikipage">wiki</string>
+	<string name="action_tagpage">tag page</string>
+	<string name="action_wikipage_tooltip">info</string>
+	<string name="action_wikipage_condensed">Wiki</string>
+	<string name="action_saveuser_title">SaveUser</string>
+	<string name="parent_post">Parent Post</string>
+	<string name="set_as_wallpaper">Set as Wallpaper</string>
+	<string name="text_error_create_http_cache">Could not create HTTP cache</string>
+</resources>
