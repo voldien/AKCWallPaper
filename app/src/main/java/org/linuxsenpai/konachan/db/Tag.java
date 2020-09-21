@@ -25,15 +25,4 @@ public class Tag {
 				return TagType.Any;
 		}
 	}
-
-
-	public enum TagType {   //TODO extract to its own file.
-		CopyRight,
-		General,
-		Character,
-		Style,
-		Artist,
-		Circle,
-		Any
-	}
 }

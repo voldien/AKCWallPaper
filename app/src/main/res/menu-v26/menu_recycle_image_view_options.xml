@@ -9,7 +9,7 @@
 		android:orderInCategory="0"
 		android:title="@string/title_search"
 		app:actionViewClass="android.widget.SearchView"
-		app:showAsAction="always" />
+		app:showAsAction="ifRoom" />
 
 	<item
 		android:id="@+id/action_settings"

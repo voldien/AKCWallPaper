@@ -35,7 +35,7 @@ public class InformationFragment extends Fragment {
 		InformationFragment fragment = new InformationFragment();
 		Bundle args = new Bundle();
 		args.putParcelable(ARG_POST_OBJECT, post);
-		ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(keys));
+		ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(keys));
 		args.putStringArrayList(ARG_POST_KEY_STRINGS, arrayList);
 		fragment.setArguments(args);
 		return fragment;
@@ -44,9 +44,18 @@ public class InformationFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setMenuVisibility(false);
+	}
 
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
 		informationViewModel = new ViewModelProvider(this).get(InformationViewModel.class);
-		informationViewModel.getInformation().observe(this, new Observer<Post>() {
+		// Inflate the layout for this fragment
+		View view = inflater.inflate(R.layout.fragment_information, container, false);
+		this.listview = view.findViewById(R.id.listview);
+
+		informationViewModel.getInformation().observe(getViewLifecycleOwner(), new Observer<Post>() {
 			@Override
 			public void onChanged(Post post) {
 				listview.setAdapter(new InformationViewApdater(post, keys));
@@ -56,17 +65,8 @@ public class InformationFragment extends Fragment {
 		if (getArguments() != null) {
 			Post post = getArguments().getParcelable(ARG_POST_OBJECT);
 			this.keys = getArguments().getStringArrayList(ARG_POST_KEY_STRINGS);
-			this.informationViewModel.jsonObjectMutableLiveData.setValue(post);
+			this.informationViewModel.loadInformation(post);
 		}
-		setMenuVisibility(false);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_information, container, false);
-		this.listview = view.findViewById(R.id.listview);
 		return view;
 	}
 }

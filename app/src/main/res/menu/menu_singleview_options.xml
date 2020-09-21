@@ -2,38 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<!--TODO remove and make part of the navigation so that it is located on the left.  -->
-<!--	<item
-		android:id="@+id/action_back"
-		android:icon="@drawable/ic_arrow_back_48px"
-		android:orderInCategory="0"
-		android:title=""
-		app:actionViewClass="android.widget.Button"
-		app:showAsAction="always" />-->
-
 	<item
 		android:id="@+id/action_bookmark"
-		android:icon="@drawable/ic_turned_in_not_black_24dp"
+		android:icon="@drawable/favorite_icon"
 		android:orderInCategory="1"
-		android:title="bookmark"
+		android:title="@string/bookmark"
 		app:showAsAction="ifRoom" />
 	<item
 		android:id="@+id/action_download"
-		android:icon="@drawable/ic_get_app_48px"
+		android:icon="@drawable/download_icon"
 		android:orderInCategory="2"
-		android:title="Download"
+		android:title="@string/download"
 		app:showAsAction="ifRoom" />
 	<item
 		android:id="@+id/action_information"
-		android:icon="@drawable/ic_info_outline_black_24dp"
+		android:icon="@drawable/information_icon"
 		android:orderInCategory="3"
-		android:title="Information"
+		android:title="@string/information"
 		app:showAsAction="ifRoom" />
 
 	<item
 		android:id="@+id/action_wallpaper"
 		android:orderInCategory="100"
-		android:title="Set as Wallpaper"
+		android:title="@string/set_as_wallpaper"
 		app:showAsAction="never" />
 
 </menu>

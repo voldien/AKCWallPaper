@@ -3,6 +3,9 @@ package org.linuxsenpai.konachan.Events;
 import android.content.Context;
 import android.widget.SearchView;
 
+import androidx.preference.PreferenceManager;
+
+import org.linuxsenpai.konachan.R;
 import org.linuxsenpai.konachan.Tasks.SearchSuggestionPopulateTask;
 import org.linuxsenpai.konachan.adapter.SearchSuggestionAdapter;
 import org.linuxsenpai.konachan.db.AppDatabase;
@@ -29,12 +32,15 @@ public class SearchQueryListener implements SearchView.OnQueryTextListener {
 	@Override
 	public boolean onQueryTextSubmit(String query) {
 		imageViewModel.search(query);
-		//this.mSearchSuggestionAdapater.notifyDataSetInvalidated();
 		/*  Update search history.  */
-		History history = new History();
-		history.created = Calendar.getInstance().getTime().getTime();
-		history.name = query;
-		AppDatabase.getAppDatabase(context).historyDao().insertAll(history);
+		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getResources().getString(R.string.key_save_history), false)) {
+			History history = new History();
+			history.created = Calendar.getInstance().getTime().getTime();
+			history.name = query;
+			AppDatabase.getAppDatabase(context).historyDao().insertAll(history);
+		}
+		searchView.clearFocus();
+		searchView.onActionViewCollapsed();
 		return true;
 	}
 

@@ -34,7 +34,7 @@ import org.linuxsenpai.konachan.Events.SearchQuerySuggestionListener;
 import org.linuxsenpai.konachan.ItemOffsetDecoration;
 import org.linuxsenpai.konachan.R;
 import org.linuxsenpai.konachan.activity.MainActivity;
-import org.linuxsenpai.konachan.adapter.PostRecycleImageAdapter;
+import org.linuxsenpai.konachan.adapter.PostImagesAdapter;
 import org.linuxsenpai.konachan.adapter.SearchSuggestionAdapter;
 import org.linuxsenpai.konachan.api.MetaController;
 
@@ -57,7 +57,7 @@ public class PostRecycleImageFragment extends Fragment {
 	// TODO: Rename and change types of parameters
 	private SearchSuggestionAdapter SearchAdapter;
 	//	private SearchView searchView;
-	private PostRecycleImageAdapter postRecycleImageAdapter;
+	private PostImagesAdapter postImagesAdapter;
 	private InputMethodManager imm;
 //	private RectF mCurrentViewport =
 //			new RectF(AXIS_X_MIN, AXIS_Y_MIN, AXIS_X_MAX, AXIS_Y_MAX);
@@ -241,12 +241,12 @@ public class PostRecycleImageFragment extends Fragment {
 			public void onChanged(String searchQuery) {
 				//TODO add support for compute diff.
 				if (recyclerView.getAdapter() == null) {
-					postRecycleImageAdapter = new PostRecycleImageAdapter(searchQuery);
-					recyclerView.setAdapter(postRecycleImageAdapter);
+					postImagesAdapter = new PostImagesAdapter(searchQuery);
+					recyclerView.setAdapter(postImagesAdapter);
 
 				} else {
 					/*  */
-					postRecycleImageAdapter.setPostTag(searchQuery);
+					postImagesAdapter.setPostTag(searchQuery);
 				}
 				recyclerView.getLayoutManager().scrollToPosition(0);
 			}
@@ -307,8 +307,10 @@ public class PostRecycleImageFragment extends Fragment {
 				public void onRefresh() {
 					//TODO change the search to a single method.
 					MainActivity mainActivity = (MainActivity) getActivity();
-					SearchView searchView = mainActivity.getSearchView().getValue();
-					viewModel.search(searchView.getQuery().toString());
+					if (mainActivity != null) {
+						SearchView searchView = mainActivity.getSearchView().getValue();
+						viewModel.search(searchView.getQuery().toString());
+					}
 				}
 			});
 		}

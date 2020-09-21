@@ -3,6 +3,7 @@ package org.linuxsenpai.konachan.api;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.linuxsenpai.konachan.BuildConfig;
 import org.linuxsenpai.konachan.Network;
+import org.linuxsenpai.konachan.R;
 import org.linuxsenpai.konachan.db.AppDatabase;
 import org.linuxsenpai.konachan.db.Note;
 import org.linuxsenpai.konachan.db.Post;
@@ -23,15 +25,14 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MetaController {
+	static public final String TAG = "Meta";
 	public static MetaController controller;
 	private ArrayList<JSONArray> postItem;
 	private ArrayList<Integer> pageIndex;
-
 	private AtomicInteger page;
 	private int pageSize = 50;
 	private Context context;
 	private SharedPreferences preferences;
-	private AppDatabase database;
 
 	//TODO determine to make a instance supported.
 	private MetaController(@NonNull Context context) {
@@ -44,7 +45,7 @@ public class MetaController {
 		this.page = new AtomicInteger(0);
 
 		this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		database = AppDatabase.getAppDatabase(context);
+		AppDatabase database = AppDatabase.getAppDatabase(context);
 		this.context = context;
 	}
 
@@ -115,7 +116,7 @@ public class MetaController {
 		return wiki;
 	}
 
-	private String getSearchFormat() {
+	private String getSearchOptions() {
 		return "rating:safe&";
 	}
 
@@ -128,25 +129,20 @@ public class MetaController {
 		/*  Update internal page buffer if out of range.    */
 		int page_index = offset / pageSize;
 		AppDatabase database = AppDatabase.getAppDatabase(context);
+		boolean useCache = preferences.getBoolean(context.getString(R.string.key_use_cache), false);
 
 		synchronized (page) {
 			//if (!lookup.containsKey(page_index)) {
 			if (offset >= Math.max(0, page_index * pageSize - 1)) {
 				/*  Compute post query. */
 				//PreferenceManager.getDefaultSharedPreferences(this.context).getInt()
-				final String rating = getSearchFormat();
+				final String rating = getSearchOptions();
 
-				//TODO add sorting mode.
 				@SuppressLint("DefaultLocale") String queryUrl = String.format("post.json?tags=%s+%s&limit=%s&page=%d", tag, rating, pageSize, page_index);  //TODO add the safe mode and etc.
 				JSONArray array = Network.GetJsonObjectQuery(context, queryUrl);
 				if (array.length() != pageSize) {
 					/*  Last page.  */
 				}
-				//TODO add iterator.
-				//currentBufferID.set((currentBufferID.get() + 1) % RRsize);
-				//postItem.set(currentBufferID.get(), array);
-
-				//lookup.put(page_index, array);
 				page.incrementAndGet();
 
 				/*  Update the database.    */
@@ -159,9 +155,12 @@ public class MetaController {
 					} catch (JSONException ignored) {
 					}
 				}
+				if (BuildConfig.DEBUG) {
+					Log.d(TAG, array.toString());
+					Log.d(TAG, String.valueOf(postList.size()));
+				}
 				database.postDao().insertAll(postList);
 			}
-//			}
 		}
 	}
 
@@ -180,34 +179,36 @@ public class MetaController {
 	}
 
 	public Cursor<Post> getPostItems(@NonNull String tag) {
-		return new Cursor<>(this, tag, APICommand.POST);
+		return new Cursor<>(this, tag, API.POST);
 	}
 
 	public Cursor<Tag> getTagItems(@NonNull String tag) {
-		return new Cursor<>(this, tag, APICommand.TAG);
+		return new Cursor<>(this, tag, API.TAG);
 	}
 
 	public Cursor<Wiki> getWikiItems(@NonNull String tag) {
-		return new Cursor<>(this, tag, APICommand.WIKI);
+		return new Cursor<>(this, tag, API.WIKI);
 	}
 
 	public int getCount() {
 		return (page.get() + 2) * pageSize;
 	}
 
-	private boolean needUpdate(){
+	private boolean needUpdate() {
 		return false;
 	}
 
 
 	public Post getPost(@NonNull String tag, int offset) {
-		assert offset >= 0;
+		if (BuildConfig.DEBUG && offset < 0) {
+			throw new AssertionError("Assertion failed");
+		}
 		Post post = null;
 
 		/*  */
 		String QueryTag = String.format("%%%s%%", tag);
-		boolean useCache = preferences.getBoolean("UseCache", false);
-		if(useCache) {
+		boolean useCache = preferences.getBoolean(context.getString(R.string.key_use_cache), false);
+		if (useCache) {
 			if (tag.length() > 0)
 				post = AppDatabase.getAppDatabase(context).postDao().getByTag(QueryTag, offset);
 			else
@@ -216,14 +217,13 @@ public class MetaController {
 
 		if (post == null) {
 			loadPost(tag, offset);
+
 			/*  Second attempt. */
 			//TODO improve the logic to prevent calling the same code block twice!.
-			if(useCache) {
-				if (tag.length() > 0)
-					post = AppDatabase.getAppDatabase(context).postDao().getByTag(QueryTag, offset);
-				else
-					post = AppDatabase.getAppDatabase(context).postDao().getOffset(offset);
-			}
+			if (tag.length() > 0)
+				post = AppDatabase.getAppDatabase(context).postDao().getByTag(QueryTag, offset);
+			else
+				post = AppDatabase.getAppDatabase(context).postDao().getOffset(offset);
 
 			if (post == null)
 				throw new RuntimeException(String.format("Could not find post: %s offset: %d", tag, offset));

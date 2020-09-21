@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/listview"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:theme="@style/AppTheme">
+	android:layout_height="match_parent"
+	tools:context=".fragment.InformationFragment">
 
-</ListView>
+	<ListView
+		android:id="@+id/listview"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:theme="@style/AppTheme"
+		tools:listitem="@layout/item_information_view"
+		tools:showIn="@layout/activity_scrolling" />
+</FrameLayout>

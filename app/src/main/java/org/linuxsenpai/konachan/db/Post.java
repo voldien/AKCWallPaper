@@ -55,8 +55,10 @@ public class Post implements Parcelable {
 		this.tags = in.readString();
 		this.created_at = in.readLong();
 		this.author = in.readString();
+		this.source = in.readString();
+		this.score = in.readInt();
+		this.file_size = in.readInt();
 		this.sampleUrl = in.readString();
-		//mData = in.readInt();
 	}
 
 	public Post() {
@@ -78,6 +80,9 @@ public class Post implements Parcelable {
 		dest.writeString(tags);
 		dest.writeLong(created_at);
 		dest.writeString(author);
+		dest.writeString(source);
+		dest.writeInt(score);
+		dest.writeInt(file_size);
 		dest.writeString(sampleUrl);
 	}
 }

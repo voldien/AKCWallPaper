@@ -31,8 +31,7 @@ public class SearchSuggestionPopulateTask extends AsyncTask<String, Void, JSONAr
 	protected JSONArray doInBackground(String... queryTexts) {
 		String url = String.format("tag.json?name=%s*&limit=5&page=1&order=count", queryTexts[0]);
 		//Log.d("SearchSuggestionPopulateTask", url);
-		JSONArray jsonArray = Network.GetJsonObjectQuery(this.context, url);
-		return jsonArray;
+		return Network.GetJsonObjectQuery(this.context, url);
 	}
 
 	@Override

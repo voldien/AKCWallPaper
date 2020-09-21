@@ -17,7 +17,7 @@ public interface PostDao {
 	@Query("SELECT * FROM Post WHERE uid IN (:userIds)")
 	List<Post> loadAllByIds(int[] userIds);
 
-	@Query("SELECT * FROM Post LIMIT 1 OFFSET (:offset)")
+	@Query("SELECT * FROM Post ORDER BY uid LIMIT 1 OFFSET (:offset)")
 	Post getOffset(int offset);
 
 	@Query("SELECT * FROM Post WHERE tags LIKE (:tag) ORDER BY uid DESC LIMIT 1 OFFSET (:offset)")

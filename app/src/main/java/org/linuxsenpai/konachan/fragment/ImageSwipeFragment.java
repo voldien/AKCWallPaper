@@ -1,13 +1,9 @@
 package org.linuxsenpai.konachan.fragment;
 
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -20,17 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.SharedElementCallback;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.transition.Fade;
 import androidx.transition.Transition;
 import androidx.transition.TransitionInflater;
 
-import org.linuxsenpai.konachan.DetailsTransition;
 import org.linuxsenpai.konachan.R;
-import org.linuxsenpai.konachan.activity.MainActivity;
 import org.linuxsenpai.konachan.view.ZoomableImageView;
 
 import java.util.List;

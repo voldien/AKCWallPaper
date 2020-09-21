@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.http.HttpResponseCache;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,10 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -122,14 +118,14 @@ public class MainActivity extends AppCompatActivity {
 			handleIntent(getIntent());
 		} else {
 			/*  Revert to the previous state of the the activity.    */
-			String query = savedInstanceState.getString(KEY_SEARCH_QUERY).toString();
+			//String query = savedInstanceState.getString(KEY_SEARCH_QUERY);
 			//this.searchView.setQuery(query, true);
 		}
 
 	}
 
 	private void ValidateStatusOfApp() {
-		/*  */
+		/*  Validate the permissions enabled.   */
 		String[] request_codes = new String[]{Manifest.permission.INTERNET, Manifest.permission.MEDIA_CONTENT_CONTROL,
 				Manifest.permission.SET_WALLPAPER, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
 				Manifest.permission.ACCESS_NETWORK_STATE};
@@ -147,9 +143,7 @@ public class MainActivity extends AppCompatActivity {
 		try {
 			File httpCacheDir = new File(this.getCacheDir(), "http");
 			long httpCacheSize = 10 * 1024 * 1024; // 10 MiB
-			if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				HttpResponseCache.install(httpCacheDir, httpCacheSize);
-			}
+			HttpResponseCache.install(httpCacheDir, httpCacheSize);
 			{
 				Class.forName("android.net.http.HttpResponseCache")
 						.getMethod("install", File.class, long.class)
@@ -289,14 +283,6 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	@Override
-	public boolean onSupportNavigateUp() {
-		NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
-		return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-				|| super.onSupportNavigateUp();
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -349,11 +335,12 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void DisplayWikiSearchFragment() {
+		/*  */
 
 	}
 
 	private void DisplayTagSearchFragment() {
-
+		/*  */
 	}
 
 	private void DisplayUserSavedData() {

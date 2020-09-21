@@ -50,7 +50,6 @@ import org.linuxsenpai.konachan.R;
 import org.linuxsenpai.konachan.Tasks.DownloadImageViewTask;
 import org.linuxsenpai.konachan.Tasks.SetTagListTask;
 import org.linuxsenpai.konachan.api.Cursor;
-import org.linuxsenpai.konachan.api.MetaController;
 import org.linuxsenpai.konachan.db.AppDatabase;
 import org.linuxsenpai.konachan.db.Post;
 import org.linuxsenpai.konachan.preference.SharedPreference;
@@ -66,7 +65,7 @@ public class SingleViewFragment extends Fragment {
 
 	static public final String META_KEY = "";
 	private static final String ARG_POST_OBJECT = "post-item-object";
-	private static final String[] POST_KEYS = {"source", "id", "created-date", "author"};
+	private static final String[] POST_KEYS = {"id", "tags", "created-date", "author", "source", "score", "file size", "file url", "preview url"};
 	DownloadImageViewTask downloadImageViewTask = null;
 	SetTagListTask setTagListTask = null;
 	private SingleViewViewModel mViewModel;
@@ -85,10 +84,10 @@ public class SingleViewFragment extends Fragment {
 		return singleViewFragment;
 	}
 
-	public static final String insertImage(ContentResolver cr,
-	                                       Bitmap source,
-	                                       String title,
-	                                       String description) {
+	public static String insertImage(ContentResolver cr,
+	                                 Bitmap source,
+	                                 String title,
+	                                 String description) {
 
 		ContentValues values = new ContentValues();
 		values.put(MediaStore.Images.Media.TITLE, title);
@@ -145,7 +144,7 @@ public class SingleViewFragment extends Fragment {
 	 *
 	 * @see android.provider.MediaStore.Images.Media (StoreThumbnail private method)
 	 */
-	private static final Bitmap storeThumbnail(
+	private static Bitmap storeThumbnail(
 			ContentResolver cr,
 			Bitmap source,
 			long id,
@@ -333,7 +332,6 @@ public class SingleViewFragment extends Fragment {
 					Log.d("TEST", "onDoubleTap");
 
 
-
 					return super.onDoubleTap(e);
 				}
 				//    ... // implement here other callback methods like onFling, onScroll as necessary
@@ -380,7 +378,6 @@ public class SingleViewFragment extends Fragment {
 			setTagListTask.cancel(true);
 
 	}
-
 
 
 	@Override
@@ -475,7 +472,7 @@ public class SingleViewFragment extends Fragment {
 		}
 	}
 
-	private void SetImageFullScreen(){
+	private void SetImageFullScreen() {
 		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.setReorderingAllowed(true); //TODO setAllowOptimization before 26.1.0

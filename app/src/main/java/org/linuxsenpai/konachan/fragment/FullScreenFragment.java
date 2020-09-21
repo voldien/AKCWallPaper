@@ -27,21 +27,16 @@ public class FullScreenFragment extends Fragment {
 	private ImageView imageView;
 
 	public FullScreenFragment() {
-		// Required empty public constructor
 	}
 
 	/**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
 	 *
-	 * @param param1 Parameter 1.
-	 * @param param2 Parameter 2.
 	 * @return A new instance of fragment FullScreenFragment.
 	 */
-	// TODO: Rename and change types and number of parameters
 	public static FullScreenFragment newInstance() {
-		FullScreenFragment fragment = new FullScreenFragment();
-		return fragment;
+		return new FullScreenFragment();
 	}
 
 	@Override
@@ -71,8 +66,21 @@ public class FullScreenFragment extends Fragment {
 		imageView.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						//some code....
+						break;
+					case MotionEvent.ACTION_UP:
+						v.performClick();
+						break;
+					default:
+						break;
+				}
 				swapFullScreenImage();
-				return false;
+				v.performClick();
+				return true;
+
+//				return false;
 			}
 		});
 
@@ -106,9 +114,9 @@ public class FullScreenFragment extends Fragment {
 
 	public void swapFullScreenImage() {
 		boolean fullScreen = (getView().getWindowSystemUiVisibility() & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
-		if(!fullScreen) {
+		if (!fullScreen) {
 			imageView.setSystemUiVisibility(
-					imageView.SYSTEM_UI_FLAG_IMMERSIVE
+					View.SYSTEM_UI_FLAG_IMMERSIVE
 							// Set the content to appear under the system bars so that the
 							// content doesn't resize when the system bars hide and show.
 							| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -117,7 +125,7 @@ public class FullScreenFragment extends Fragment {
 							// Hide the nav bar and status bar
 							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 							| View.SYSTEM_UI_FLAG_FULLSCREEN);
-		}else{
+		} else {
 
 		}
 	}

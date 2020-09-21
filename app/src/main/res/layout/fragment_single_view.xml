@@ -9,11 +9,18 @@
 
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:id="@+id/floating_action_button"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_width="25dp"
+		android:layout_height="25dp"
 		android:clickable="true"
 		android:focusable="true"
-		android:src="@drawable/ic_arrow_back_48px" />
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintDimensionRatio="w,1:1"
+		app:layout_constraintEnd_toStartOf="@+id/scroll_view"
+		app:layout_constraintHorizontal_bias="0.62"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="1.0"
+		app:srcCompat="@drawable/ic_arrow_back_48px" />
 
 	<ScrollView
 		android:id="@+id/scroll_view"
@@ -30,8 +37,8 @@
 				android:name="org.linuxsenpai.konachan.fragment.DummyFragment"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:transitionName="profile"
-				android:tag="swipe" />
+				android:tag="swipe"
+				android:transitionName="profile" />
 
 			<TextView
 				android:id="@+id/textview_child_link"

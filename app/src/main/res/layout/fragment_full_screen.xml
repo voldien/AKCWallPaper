@@ -8,10 +8,10 @@
 
 	<ImageView
 		android:id="@+id/image"
-		android:src="@drawable/ic_get_app_48px"
 		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="@string/image_desc"
 		android:scaleType="centerCrop"
-		android:transitionName="profile"
-		android:layout_height="match_parent" />
+		android:transitionName="profile" />
 
 </FrameLayout>

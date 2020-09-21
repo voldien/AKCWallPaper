@@ -14,7 +14,7 @@ public class TaskRunner {
 	/*	private final Executor executor = Executors.newSingleThreadExecutor(); // change according to your requirements*/
 	public static final ExecutorService THREAD_POOL_EXECUTOR =
 			new ThreadPoolExecutor(5, 128, 1,
-					TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+					TimeUnit.SECONDS, new LinkedBlockingQueue<>());
 	private final Handler handler = new Handler(Looper.getMainLooper());
 
 	public <R> void executeAsync(final Callable<R> callable, final Callback<R> callback) {

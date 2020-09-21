@@ -1,6 +1,6 @@
 package org.linuxsenpai.konachan.api;
 
-public enum APICommand {
+public enum API {
 	POST,
 	NOTE,
 	TAG,

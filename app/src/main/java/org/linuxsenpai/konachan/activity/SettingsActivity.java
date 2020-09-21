@@ -29,12 +29,13 @@ public class SettingsActivity extends AppCompatActivity {
 		@Override
 		public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 			setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-			//getPreferenceManager().findPreference("disk_")
 		}
 
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+			/*  Perform action based on the setting change. */
+			//getPreferenceManager().findPreference("disk_")
 			return false;
 		}
 	}

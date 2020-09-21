@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.linuxsenpai.konachan.R;
 
-public class RecycleImageFavorite extends RecyclerView.Adapter<PostRecycleImageAdapter.ViewHolder> {
+public class RecycleImageFavorite extends RecyclerView.Adapter<PostImagesAdapter.ViewHolder> {
 
 
 	@Override
@@ -17,12 +17,12 @@ public class RecycleImageFavorite extends RecyclerView.Adapter<PostRecycleImageA
 
 	@NonNull
 	@Override
-	public PostRecycleImageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+	public PostImagesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		return null;
 	}
 
 	@Override
-	public void onBindViewHolder(@NonNull PostRecycleImageAdapter.ViewHolder holder, int position) {
+	public void onBindViewHolder(@NonNull PostImagesAdapter.ViewHolder holder, int position) {
 
 	}
 

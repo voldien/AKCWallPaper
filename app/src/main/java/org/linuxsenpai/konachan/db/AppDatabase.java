@@ -19,17 +19,15 @@ public abstract class AppDatabase extends RoomDatabase {
 		return _instance;
 	}
 
-	public abstract HistoryDao historyDao();
+	public abstract HistoryDao historyDao();    /*  Internal data.  */
 
-	public abstract FavoriteDao favoriteDao();
+	public abstract FavoriteDao favoriteDao();  /*  Internal data.  */
 
-	public abstract PostDao postDao();
+	public abstract PostDao postDao();  /*  Based on the external API.   */
 
-	public abstract TagDao tagDao();
+	public abstract TagDao tagDao();  /*  Based on the external API.   */
 
-	public abstract WikiDao wikiDao();
+	public abstract WikiDao wikiDao();  /*  Based on the external API.   */
 
-	public abstract NoteDao noteDao();
-
-	/*	public abstract WikiDao*/
+	public abstract NoteDao noteDao();  /*  Based on the external API.   */
 }

@@ -8,9 +8,9 @@ public class Cursor<T> {
 	public String name;
 	public int current;
 	private MetaController controller;
-	private APICommand type;
+	private API type;
 
-	public Cursor(MetaController controller, @NonNull String tag, APICommand type) {
+	public Cursor(MetaController controller, @NonNull String tag, API type) {
 		this.controller = controller;
 		this.type = type;
 		this.current = 0;
@@ -28,7 +28,7 @@ public class Cursor<T> {
 	}
 
 	public int size() {
-		return Math.max(current, 0) + 100;//controller.getCount();
+		return Math.max(current, 0) + 25;//controller.getCount();
 	}
 
 	public boolean hasNext() {
@@ -39,8 +39,8 @@ public class Cursor<T> {
 		return true;
 	}
 
-	public T current() {
-		return null;//getIndex(current);
+	public T current() throws JSONException {
+		return getIndex(current);
 	}
 
 	public T getIndex(int index) throws JSONException {

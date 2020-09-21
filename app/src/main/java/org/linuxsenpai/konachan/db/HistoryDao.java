@@ -1,5 +1,6 @@
 package org.linuxsenpai.konachan.db;
 
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @Dao
 public interface HistoryDao {
+
+	@Query("SELECT * FROM History ORDER BY created ASC")
+	DataSource.Factory<Integer, History> getAllFromDate();
 
 	@Query("SELECT * FROM History")
 	List<History> getAll();

@@ -3,31 +3,30 @@ package org.linuxsenpai.konachan.activity;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.linuxsenpai.konachan.R;
+import org.linuxsenpai.konachan.adapter.DemoCollectionPagerAdapter;
 
-//TOOD rename!
+//TODO rename!
 public class UserSavingActivity extends AppCompatActivity {
+
+	final String[] tabLabels = {"History", "Favorite"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_saving);
-		BottomNavigationView navView = findViewById(R.id.nav_view);
-		// Passing each menu ID as a set of Ids because each
-		// menu should be considered as top level destinations.
-		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-				R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-				.build();
-		NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-		NavigationUI.setupWithNavController(navView, navController);
+		ViewPager2 viewPager = findViewById(R.id.pager);
+		viewPager.setAdapter(new DemoCollectionPagerAdapter(this));
+
+		TabLayout tabLayout = findViewById(R.id.tab_layout);
+		new TabLayoutMediator(tabLayout, viewPager,
+				(tab, position) -> tab.setText(tabLabels[position])
+		).attach();
 	}
 
 }

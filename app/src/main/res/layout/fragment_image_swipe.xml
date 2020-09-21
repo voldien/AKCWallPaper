@@ -7,9 +7,7 @@
 
 	<ImageSwitcher
 		android:id="@+id/image_switch"
-
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:src="@drawable/e4ecf82091e74124117661b645ece376" />
-
 </FrameLayout>

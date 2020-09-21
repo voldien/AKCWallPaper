@@ -8,19 +8,20 @@ import android.view.View;
 import androidx.collection.LruCache;
 
 import org.linuxsenpai.konachan.Network;
-import org.linuxsenpai.konachan.adapter.PostRecycleImageAdapter;
+import org.linuxsenpai.konachan.adapter.PostImagesAdapter;
 import org.linuxsenpai.konachan.api.Cursor;
 import org.linuxsenpai.konachan.db.Post;
+import org.linuxsenpai.konachan.preference.SharedPreference;
 
 public class FetchDisplayImageHolderItem extends AsyncTask<Void, Void, Void> {
-	PostRecycleImageAdapter.ViewHolder viewHolder;
+	PostImagesAdapter.ViewHolder viewHolder;
 	Bitmap result;
 	int offset;
 	private Cursor<Post> postCursor;
 	private LruCache<String, Bitmap> memoryCache;
+	static final String TAG ="Download";
 
-
-	public FetchDisplayImageHolderItem(PostRecycleImageAdapter.ViewHolder holder, LruCache<String, Bitmap> memoryCache, Cursor<Post> postCursor, int position) {
+	public FetchDisplayImageHolderItem(PostImagesAdapter.ViewHolder holder, LruCache<String, Bitmap> memoryCache, Cursor<Post> postCursor, int position) {
 		this.viewHolder = holder;
 		this.offset = position;
 		this.memoryCache = memoryCache;
@@ -47,7 +48,7 @@ public class FetchDisplayImageHolderItem extends AsyncTask<Void, Void, Void> {
 			}
 			result = cacheBitmap;
 		} catch (Exception e) {
-			Log.e("Download", e.getMessage());
+			Log.e(TAG, e.getMessage());
 		} finally {
 
 		}
@@ -59,6 +60,12 @@ public class FetchDisplayImageHolderItem extends AsyncTask<Void, Void, Void> {
 		this.viewHolder.image.setImageBitmap(this.result);
 		this.viewHolder.image.setVisibility(View.VISIBLE);
 		this.viewHolder.progressbar.setVisibility(View.GONE);
+
+		/*  TODO determine how to improve performance by not allocating everytime.  */
+		SharedPreference sharedPreference = new SharedPreference();
+		if (sharedPreference.isPostFavorite(this.viewHolder.image.getContext(), this.viewHolder.post)) {
+			this.viewHolder.favoriteIcon.setVisibility(View.VISIBLE);
+		}
 	}
 
 }

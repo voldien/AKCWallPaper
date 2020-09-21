@@ -1,12 +1,9 @@
 package org.linuxsenpai.konachan.adapter;
 
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +19,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.Fade;
-import androidx.transition.TransitionInflater;
 
 import org.linuxsenpai.konachan.DetailsTransition;
 import org.linuxsenpai.konachan.R;
@@ -37,7 +33,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class PostRecycleImageAdapter extends RecyclerView.Adapter<PostRecycleImageAdapter.ViewHolder> {
+//TODO check if possible to repurpose it so it can be used with the favorite list as well.
+public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter.ViewHolder> {
 	private static final int DISK_CACHE_SIZE = 1024 * 1024 * 10; // 10MB
 	private static final String DISK_CACHE_SUBDIR = "thumbnails";
 	private final Object diskCacheLock = new Object();
@@ -46,7 +43,7 @@ public class PostRecycleImageAdapter extends RecyclerView.Adapter<PostRecycleIma
 	private Cursor<Post> postCursor;
 	private ExecutorService executorService = null;
 
-	public PostRecycleImageAdapter(String query) {
+	public PostImagesAdapter(String query) {
 		this.createRamCache();
 		this.setPostTag(query);
 		this.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -108,7 +105,7 @@ public class PostRecycleImageAdapter extends RecyclerView.Adapter<PostRecycleIma
 
 		}
 		executorService = new ThreadPoolExecutor(3, 128, 1,
-				TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+				TimeUnit.SECONDS, new LinkedBlockingQueue<>());
 		//TODO resolve null param
 		this.postCursor = MetaController.getInstance(null).getPostItems(query);
 		notifyDataSetChanged();
@@ -119,8 +116,8 @@ public class PostRecycleImageAdapter extends RecyclerView.Adapter<PostRecycleIma
 	                                     int viewType) {
 		View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
 		ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-		layoutParams.height = (int) (parent.getHeight() * 0.15); // control the recyclerView row height from here
-		view.setLayoutParams(layoutParams);
+/*		layoutParams.height = (int) (parent.getHeight() * 0.15); // control the recyclerView row height from here
+		view.setLayoutParams(layoutParams);*/
 		ProgressBar progressBar = view.findViewById(R.id.item_image_view_processbar);
 //		progressBar.startAnimation();
 //		progressBar.startAnimation();
@@ -128,16 +125,19 @@ public class PostRecycleImageAdapter extends RecyclerView.Adapter<PostRecycleIma
 
 		ImageView imageView = view.findViewById(R.id.item_image_view_image);
 //		imageView.setImageResource(R.drawable.e4ecf82091e74124117661b645ece376);
+
 		imageView.setMinimumWidth(0);
 		imageView.setMinimumHeight(0);
+
+
 		//	imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 /*		imageview.setLayoutParams
 				(new ViewGroup.MarginLayoutParams
 						(width, ViewGroup.LayoutParams.MATCH_PARENT));*/
 
 		//Add animations for visual behaviors.
-		imageView.setAnimation(AnimationUtils.loadAnimation(parent.getContext(), R.anim.fragment_close_enter));
-		imageView.setAnimation(AnimationUtils.loadAnimation(parent.getContext(), R.anim.fragment_close_exit));
+/*		imageView.setAnimation(AnimationUtils.loadAnimation(parent.getContext(), R.anim.fragment_close_enter));
+		imageView.setAnimation(AnimationUtils.loadAnimation(parent.getContext(), R.anim.fragment_close_exit));*/
 
 		//*  Create object.  *//*
 		final ViewHolder vh = new ViewHolder(view, imageView, progressBar);
@@ -204,12 +204,14 @@ public class PostRecycleImageAdapter extends RecyclerView.Adapter<PostRecycleIma
 		// each data item is just a string in this case
 		public Post post = null;
 		public ImageView image;
+		public ImageView favoriteIcon;
 		public ProgressBar progressbar;
 
 		public ViewHolder(View v, ImageView image, ProgressBar progressBar) {
 			super(v);
 			this.image = image;
 			this.progressbar = progressBar;
+			this.favoriteIcon = v.findViewById(R.id.item_image_view_favorite_icon);
 		}
 	}
 

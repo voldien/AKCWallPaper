@@ -53,7 +53,7 @@ public class TagListRecyclerViewAdapter extends RecyclerView.Adapter<TagListRecy
 		return tagList.size();
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder {
+	public static class ViewHolder extends RecyclerView.ViewHolder {
 		public View mView;
 		public TextView mIdView;
 		public TextView mContentView;
@@ -81,6 +81,7 @@ public class TagListRecyclerViewAdapter extends RecyclerView.Adapter<TagListRecy
 				public boolean onLongClick(View v) {
 					/*  Make menu option display.   */
 					v.showContextMenu();
+					/*  */
 					return false;
 				}
 			});

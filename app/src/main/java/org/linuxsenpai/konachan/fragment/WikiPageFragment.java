@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import org.linuxsenpai.konachan.R;
+import org.linuxsenpai.konachan.activity.ui.history.HistoryViewModel;
 
 public class WikiPageFragment extends Fragment {
 
@@ -29,7 +31,7 @@ public class WikiPageFragment extends Fragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mViewModel = ViewModelProviders.of(this).get(WikiPageViewModel.class);
+		mViewModel = new ViewModelProvider(this).get(WikiPageViewModel.class);
 		// TODO: Use the ViewModel
 	}
 

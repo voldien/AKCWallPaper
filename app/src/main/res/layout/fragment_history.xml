@@ -4,20 +4,12 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".fragment.PostRecycleImageFragment">
+	tools:context=".activity.ui.history.HistoryFragment">
 
 	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/recycler_view"
+		android:id="@+id/listview"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_margin="@dimen/post_recycle_margin"
-		android:divider="@color/divider_color"
-		android:dividerHeight="1dp"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior"
-		tools:context=".activity.MainActivity"
-		tools:listitem="@layout/item_image_view"
-		tools:showIn="@layout/activity_scrolling">
-
-	</androidx.recyclerview.widget.RecyclerView>
-
+		tools:listitem="@layout/item_information_view" />
 </FrameLayout>
