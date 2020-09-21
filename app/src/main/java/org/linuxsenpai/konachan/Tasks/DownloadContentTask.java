@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 public class DownloadContentTask extends AsyncTask<String, Void, InputStream> {
 
-	private Context context;
+	private final Context context;
 
 	public DownloadContentTask(Context context) {
 		this.context = context;

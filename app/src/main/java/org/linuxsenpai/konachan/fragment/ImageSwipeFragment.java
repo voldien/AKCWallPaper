@@ -122,6 +122,7 @@ public class ImageSwipeFragment extends Fragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
 		mViewModel = ViewModelProviders.of(this).get(ImageSwipeViewModel.class);
 	}
 

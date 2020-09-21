@@ -8,7 +8,7 @@ import org.linuxsenpai.konachan.Network;
 import org.linuxsenpai.konachan.R;
 
 public class DownloadImageViewTask extends AsyncTask<String, Void, Bitmap> {
-	ImageView bmImage;
+	final ImageView bmImage;
 
 	public DownloadImageViewTask(ImageView bmImage) {
 		this.bmImage = bmImage;

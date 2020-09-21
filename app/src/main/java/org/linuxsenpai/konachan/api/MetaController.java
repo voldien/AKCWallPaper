@@ -29,7 +29,7 @@ public class MetaController {
 	public static MetaController controller;
 	private ArrayList<JSONArray> postItem;
 	private ArrayList<Integer> pageIndex;
-	private AtomicInteger page;
+	private final AtomicInteger page;
 	private int pageSize = 50;
 	private Context context;
 	private SharedPreferences preferences;

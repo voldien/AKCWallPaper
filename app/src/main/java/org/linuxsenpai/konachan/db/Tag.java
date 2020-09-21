@@ -15,12 +15,11 @@ public class Tag {
 	public TagType getType() {
 
 		switch (this.type) {
-			case 0:
-				return TagType.Any;
 			case 1:
 				return TagType.Character;
 			case 2:
 			case 3:
+			case 0:
 			default:
 				return TagType.Any;
 		}

@@ -8,7 +8,7 @@ public class Cursor<T> {
 	public String name;
 	public int current;
 	private MetaController controller;
-	private API type;
+	private final API type;
 
 	public Cursor(MetaController controller, @NonNull String tag, API type) {
 		this.controller = controller;
@@ -43,7 +43,7 @@ public class Cursor<T> {
 		return getIndex(current);
 	}
 
-	public T getIndex(int index) throws JSONException {
+	public T getIndex(int index) {
 		assert name != null;
 
 		switch (type) {

@@ -6,4 +6,4 @@
 	android:searchSettingsDescription="@string/settings_description"
 	android:searchSuggestAuthority="dictionary"
 	android:searchSuggestIntentAction="android.intent.action.VIEW"
-	android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"></searchable>
+	android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" />

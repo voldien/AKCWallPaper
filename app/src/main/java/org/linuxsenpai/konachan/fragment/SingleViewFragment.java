@@ -107,11 +107,8 @@ public class SingleViewFragment extends Fragment {
 			url = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
 			if (source != null) {
-				OutputStream imageOut = cr.openOutputStream(url);
-				try {
+				try (OutputStream imageOut = cr.openOutputStream(url)) {
 					source.compress(Bitmap.CompressFormat.JPEG, 50, imageOut);
-				} finally {
-					imageOut.close();
 				}
 
 				long id = ContentUris.parseId(url);
@@ -179,8 +176,6 @@ public class SingleViewFragment extends Fragment {
 			thumb.compress(Bitmap.CompressFormat.JPEG, 100, thumbOut);
 			thumbOut.close();
 			return thumb;
-		} catch (FileNotFoundException ex) {
-			return null;
 		} catch (IOException ex) {
 			return null;
 		}

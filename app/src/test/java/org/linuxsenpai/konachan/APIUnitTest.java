@@ -1,27 +1,25 @@
 package org.linuxsenpai.konachan;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.linuxsenpai.konachan.api.MetaController;
 import org.linuxsenpai.konachan.db.Note;
 import org.linuxsenpai.konachan.db.Post;
 import org.linuxsenpai.konachan.db.Tag;
+import org.linuxsenpai.konachan.db.TagType;
 import org.linuxsenpai.konachan.db.Wiki;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URLConnection;
 
 public class APIUnitTest {
 
@@ -128,12 +126,12 @@ public class APIUnitTest {
 	}
 
 	@Test
-	public void Post_Parcel_Constructed_Correct_Order(){
+	public void Post_Parcel_Constructed_Correct_Order() {
 		Post post = new Post();
 		post.uid = 10;
 		post.tags = "";
 		post.created_at = 0;
-		post.author ="";
+		post.author = "";
 		post.source = "";
 		post.file_size = 0;
 
@@ -141,27 +139,32 @@ public class APIUnitTest {
 		post.writeToParcel(parcel, 0);
 		/*  Check all the attributes.   */
 		Post post1 = Post.CREATOR.createFromParcel(parcel);
-		//TODO add
+
+		/*  Check the result is equal.   */
 		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.uid, post1.uid);
+		Assert.assertEquals(post.tags, post1.tags);
+		Assert.assertEquals(post.created_at, post1.created_at);
+		Assert.assertEquals(post.author, post1.author);
+		Assert.assertEquals(post.source, post1.source);
+		Assert.assertEquals(post.score, post1.score);
+		Assert.assertEquals(post.file_size, post1.file_size);
+		Assert.assertEquals(post.file_url, post1.file_url);
+		Assert.assertEquals(post.is_shown_in_index, post1.is_shown_in_index);
+		Assert.assertEquals(post.previewUrl, post1.previewUrl);
+		Assert.assertEquals(post.actual_preview_width, post1.actual_preview_width);
+		Assert.assertEquals(post.actual_preview_height, post1.actual_preview_height);
+		Assert.assertEquals(post.sampleUrl, post1.sampleUrl);
+		Assert.assertEquals(post.hasChildren, post1.hasChildren);
+		Assert.assertEquals(post.parent_id, post1.parent_id);
 	}
 
 	@Test
-	public void Tag_Parcel_Constructed_Corrected_Order(){
+	public void Tag_Parcel_Constructed_Corrected_Order() {
 		Tag tag = new Tag();
 		tag.uid = 0;
 		tag.count = 0;
 		tag.name = "";
-		tag.type = Tag.TagType.Any.ordinal();
+		tag.type = TagType.Any.ordinal();
 
 		Parcel parcel = Parcel.obtain();
 	}
