@@ -10,4 +10,8 @@
 
 	<dimen name="photos_list_spacing">2dp</dimen>
 	<dimen name="suggestion_textview_size">25sp</dimen>
+	<dimen name="post_recycle_margin">2dp</dimen>
+	<dimen name="information_text_size">25sp</dimen>
+
+	<string name="header_image_ratio">2:1</string>
 </resources>

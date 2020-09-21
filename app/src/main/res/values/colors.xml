@@ -22,6 +22,7 @@
 	<color name="black">#000000</color>
 
 	<color name="tag_color_any">#ee8887</color>
+	<color name="tag_color_any_inverse">#883029</color>
 	<color name="tag_color_general">#ee8887</color>
 	<color name="tag_color_artist">#cccc00</color>
 	<color name="tag_color_character">#0A0</color>
