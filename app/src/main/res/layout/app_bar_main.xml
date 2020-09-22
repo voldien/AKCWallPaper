@@ -9,6 +9,7 @@
 	tools:context=".activity.MainActivity">
 
 	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/appbar_layout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:theme="@style/AppTheme.AppBarOverlay">
@@ -21,11 +22,12 @@
 			app:popupTheme="@style/AppTheme.PopupOverlay" />
 	</com.google.android.material.appbar.AppBarLayout>
 
-
 	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 		android:id="@+id/swiperefresh"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:tag="swiperefresh"
+		android:visibility="visible">
 
 		<include
 			layout="@layout/content_scrolling"

@@ -39,10 +39,7 @@
 
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-		</activity> <!-- All activity used for the application. -->
-		<!--		<activity
-					android:name=".activity.SingleViewActivity"
-					android:label="SingleView" />-->
+		</activity>
 		<activity
 			android:name=".activity.MainActivity"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
