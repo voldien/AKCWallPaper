@@ -49,7 +49,7 @@ public class SingleViewImageSwipeOnTouch implements View.OnTouchListener {
 					//	int imageID = cursor.getInt(columnIndex);
 					//DownloadImageViewTask downloadImageViewTask = new DownloadImageViewTask((ImageView)imageSwitcher.getCurrentView());
 					ImageView im = (ImageView) imageSwitcher.getNextView();
-					im.setImageResource(R.drawable.e4ecf82091e74124117661b645ece376);
+					im.setImageResource(R.drawable.ic_get_app);
 					//images.setImageURI(Uri.withAppendedPath(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, "" + imageID));
 					//images.setBackgroundResource(R.drawable.ic_launcher);
 					Toast.makeText(v.getContext(), "previous Image",

@@ -233,7 +233,6 @@ public class PostRecycleImageFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
 		/*  Create model.   */
 		viewModel = new ViewModelProvider(this).get(RecycleImageViewModel.class);
 		viewModel.getSearchQuery().observe(this, new Observer<String>() {

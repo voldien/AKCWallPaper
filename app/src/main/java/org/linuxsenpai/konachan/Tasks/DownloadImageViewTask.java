@@ -32,6 +32,6 @@ public class DownloadImageViewTask extends AsyncTask<String, Void, Bitmap> {
 		if (result != null)
 			bmImage.setImageBitmap(result);
 		else
-			bmImage.setImageResource(R.drawable.e4ecf82091e74124117661b645ece376);
+			bmImage.setImageResource(R.drawable.ic_get_app);
 	}
 }
