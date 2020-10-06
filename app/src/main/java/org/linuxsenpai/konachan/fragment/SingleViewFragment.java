@@ -218,14 +218,16 @@ public class SingleViewFragment extends Fragment {
 
 		/*  TODO add scroll animation transition effects.   */
 		ScrollView scrollView = view.findViewById(R.id.scroll_view);
-		scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-			@Override
-			public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+				@Override
+				public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-			}
+				}
 
 
-		});
+			});
+		}
 
 		//tagListFragment.setTagList();
 
