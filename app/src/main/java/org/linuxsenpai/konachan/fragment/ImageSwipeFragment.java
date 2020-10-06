@@ -1,6 +1,7 @@
 package org.linuxsenpai.konachan.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -48,7 +49,9 @@ public class ImageSwipeFragment extends Fragment {
 		imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
 			public View makeView() {
 				final ImageView imageView = new ZoomableImageView(getContext(), null);
-				imageView.setTransitionName("profile");
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					imageView.setTransitionName("profile");
+				}
 				registerForContextMenu(imageView);
 				imageView.setOnClickListener(null);
 				return imageView;
