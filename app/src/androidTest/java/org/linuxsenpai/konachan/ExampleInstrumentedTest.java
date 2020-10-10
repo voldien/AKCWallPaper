@@ -81,7 +81,6 @@ public class ExampleInstrumentedTest {
 
 	}
 
-
 	@Test
 	public void LoadImage_download() {
 		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -101,25 +100,27 @@ public class ExampleInstrumentedTest {
 
 	}
 
+
+
+
+	@Test(expected = Test.None.class)
+	public void NetworkCreateConnection_NoThrow() throws IOException {
+		String url = "https://konachan.net/post.json?tags=";
+		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+		/*  Create network connection.  */
+		URLConnection connection = Network.GetConnection(url);
+		Assert.assertNotNull(connection);
+		connection.connect();
+	}
+
 	@Test
 	public void NetworkJsonDownload() {
 		String url = "https://konachan.net/post.json?tags=";
 
-		try {
-			JSONArray jsonObject = Network.GetJsonObject(url);
-			Assert.assertNotNull(jsonObject);
-
-			URLConnection connection = Network.GetConnection(url);
-			Assert.assertNotNull(connection);
-
-			connection.connect();
-
-			InputStream inputStream = Network.GetHTTPStream(url);
-			Assert.assertNotNull(inputStream);
-			inputStream.close();
-		} catch (IOException e) {
-			Assert.fail("Something throw:" + e.getMessage());
-		}
-
+		/*  Download json object.   */
+		JSONArray jsonObject = Network.GetJsonObject(url);
+		Assert.assertNotNull(jsonObject);
+		Assert.assertNotEquals(jsonObject.length(), 0);
 	}
 }

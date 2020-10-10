@@ -1,5 +1,8 @@
 package org.linuxsenpai.konachan.db;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,7 +11,7 @@ import java.sql.Types;
 import java.util.Date;
 
 @Entity
-public class Wiki {
+public class Wiki implements Parcelable {
 
 	@PrimaryKey
 	public int uid;
@@ -28,4 +31,39 @@ public class Wiki {
 	public Date getModifedDate() {
 		return new Date(this.updated_at);
 	}
+
+	public static final Creator<Wiki> CREATOR = new Creator<Wiki>() {
+		@Override
+		public Wiki createFromParcel(Parcel in) {
+			return new Wiki(in);
+		}
+
+		@Override
+		public Wiki[] newArray(int size) {
+			return new Wiki[size];
+		}
+	};
+
+	public Wiki() {
+
+	}
+
+	protected Wiki(Parcel in) {
+
+		body = in.readString();
+		version = in.readInt();
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+
+		dest.writeString(body);
+		dest.writeInt(version);
+	}
+
 }

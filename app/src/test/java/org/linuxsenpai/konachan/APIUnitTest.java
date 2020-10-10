@@ -62,20 +62,15 @@ public class APIUnitTest {
 		Post post = MetaController.convertJson2Post(object);
 		Assert.assertNotNull(post);
 		Assert.assertEquals(post.uid, 313892);
-		Assert.assertEquals(post.tags, 313892);
-		Assert.assertEquals(post.created_at, 313892);
-		Assert.assertEquals(post.author, 313892);
-		Assert.assertEquals(post.source, 313892);
-		Assert.assertEquals(post.file_size, 313892);
-		Assert.assertEquals(post.file_url, 313892);
-		Assert.assertEquals(post.is_shown_in_index, 313892);
-		Assert.assertEquals(post.previewUrl, 313892);
-		Assert.assertEquals(post.actual_preview_width, 313892);
-		Assert.assertEquals(post.actual_preview_height, 313892);
-		Assert.assertEquals(post.sampleUrl, 313892);
-		Assert.assertEquals(post.hasChildren, 313892);
+		Assert.assertEquals(post.tags, "arknights qtian tomimi_(arknights)");
+		Assert.assertEquals(post.author, "BattlequeenYume");
+		Assert.assertEquals(post.file_size, 1738489);
+		Assert.assertEquals(post.is_shown_in_index, true);
+		Assert.assertEquals(post.actual_preview_width, 300);
+		Assert.assertEquals(post.actual_preview_height, 212);
+		Assert.assertEquals(post.hasChildren, false);
 		Assert.assertEquals(post.parent_id, -1);
-		Assert.assertEquals(post.rating, -1);
+		Assert.assertEquals(post.rating, "q");
 	}
 
 	@Test(expected = Test.None.class)
@@ -97,15 +92,14 @@ public class APIUnitTest {
 		Note note = MetaController.convertJson2Note(object);
 
 		Assert.assertNotNull(note);
-		Assert.assertEquals(note.id, 905);
-		Assert.assertEquals(note.created_date, 905);
-		Assert.assertEquals(note.x, 905);
-		Assert.assertEquals(note.y, 905);
-		Assert.assertEquals(note.width, 905);
-		Assert.assertEquals(note.height, 905);
-		Assert.assertEquals(note.post_id, 905);
-		Assert.assertEquals(note.body, 905);
-		Assert.assertEquals(note.version, 905);
+		Assert.assertEquals(note.id, 7376);
+		Assert.assertEquals(note.x, 264);
+		Assert.assertEquals(note.y, 185);
+		Assert.assertEquals(note.width, 188);
+		Assert.assertEquals(note.height, 185);
+		Assert.assertEquals(note.post_id, 312859);
+		Assert.assertEquals(note.body, "Uraraka Ochako\n(Boku no Hero Academia)");
+		Assert.assertEquals(note.version, 1);
 	}
 
 	@Test(expected = Test.None.class)
@@ -116,57 +110,11 @@ public class APIUnitTest {
 
 		/*  */
 		Assert.assertEquals(wiki.uid, 905);
-		Assert.assertEquals(wiki.created_at, 93238);
+		//Assert.assertEquals(wiki.created_at, 93238);
 		Assert.assertEquals(wiki.updated_at, 0);
-		Assert.assertEquals(wiki.title, "long_hair");
-		Assert.assertEquals(wiki.body, "body");
-		Assert.assertEquals(wiki.updater_id, "updater_id");
-		Assert.assertEquals(wiki.locked, "locked");
-		Assert.assertEquals(wiki.version, "locked");
+		Assert.assertEquals(wiki.title, "alice_in_musicland_(vocaloid)");
+		Assert.assertEquals(wiki.updater_id, 96529);
+		Assert.assertEquals(wiki.locked, false);
+		Assert.assertEquals(wiki.version, 1);
 	}
-
-	@Test
-	public void Post_Parcel_Constructed_Correct_Order() {
-		Post post = new Post();
-		post.uid = 10;
-		post.tags = "";
-		post.created_at = 0;
-		post.author = "";
-		post.source = "";
-		post.file_size = 0;
-
-		Parcel parcel = Parcel.obtain();
-		post.writeToParcel(parcel, 0);
-		/*  Check all the attributes.   */
-		Post post1 = Post.CREATOR.createFromParcel(parcel);
-
-		/*  Check the result is equal.   */
-		Assert.assertEquals(post.uid, post1.uid);
-		Assert.assertEquals(post.tags, post1.tags);
-		Assert.assertEquals(post.created_at, post1.created_at);
-		Assert.assertEquals(post.author, post1.author);
-		Assert.assertEquals(post.source, post1.source);
-		Assert.assertEquals(post.score, post1.score);
-		Assert.assertEquals(post.file_size, post1.file_size);
-		Assert.assertEquals(post.file_url, post1.file_url);
-		Assert.assertEquals(post.is_shown_in_index, post1.is_shown_in_index);
-		Assert.assertEquals(post.previewUrl, post1.previewUrl);
-		Assert.assertEquals(post.actual_preview_width, post1.actual_preview_width);
-		Assert.assertEquals(post.actual_preview_height, post1.actual_preview_height);
-		Assert.assertEquals(post.sampleUrl, post1.sampleUrl);
-		Assert.assertEquals(post.hasChildren, post1.hasChildren);
-		Assert.assertEquals(post.parent_id, post1.parent_id);
-	}
-
-	@Test
-	public void Tag_Parcel_Constructed_Corrected_Order() {
-		Tag tag = new Tag();
-		tag.uid = 0;
-		tag.count = 0;
-		tag.name = "";
-		tag.type = TagType.Any.ordinal();
-
-		Parcel parcel = Parcel.obtain();
-	}
-
 }

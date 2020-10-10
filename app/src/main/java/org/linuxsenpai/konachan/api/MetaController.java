@@ -62,12 +62,16 @@ public class MetaController {
 		post_entry.tags = object.getString("tags");
 		post_entry.created_at = object.getLong("created_at");
 		post_entry.author = object.getString("author");
+		post_entry.file_size = object.getInt("file_size");
 		post_entry.source = object.getString("source");
 		post_entry.score = object.getInt("score");
 		post_entry.file_url = object.getString("file_url");
 		post_entry.previewUrl = object.getString("preview_url");
 		post_entry.sampleUrl = object.getString("sample_url");
 		post_entry.hasChildren = object.getBoolean("has_children");
+		post_entry.is_shown_in_index = object.getBoolean("is_shown_in_index");
+		post_entry.actual_preview_width = object.getInt("actual_preview_width");
+		post_entry.actual_preview_height = object.getInt("actual_preview_height");
 		if (!object.isNull("parent_id"))
 			post_entry.parent_id = object.getInt("parent_id");
 		else

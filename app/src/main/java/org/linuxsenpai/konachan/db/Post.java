@@ -58,7 +58,14 @@ public class Post implements Parcelable {
 		this.source = in.readString();
 		this.score = in.readInt();
 		this.file_size = in.readInt();
+		this.file_url = in.readString();
+		//this.is_shown_in_index = (boolean)in.readInt();
+		this.previewUrl = in.readString();
+		this.actual_preview_width = in.readInt();
+		this.actual_preview_height = in.readInt();
 		this.sampleUrl = in.readString();
+		//this.hasChildren = (boolean)in.readInt();
+		this.parent_id = in.readInt();
 	}
 
 	public Post() {
@@ -83,6 +90,13 @@ public class Post implements Parcelable {
 		dest.writeString(source);
 		dest.writeInt(score);
 		dest.writeInt(file_size);
+		dest.writeString(file_url);
+		//dest.writeInt((int)is_shown_in_index);
+		dest.writeString(previewUrl);
+		dest.writeInt(actual_preview_width);
+		dest.writeInt(actual_preview_height);
 		dest.writeString(sampleUrl);
+		//dest.writeInt(hasChildren);
+		dest.writeInt(parent_id);
 	}
 }
