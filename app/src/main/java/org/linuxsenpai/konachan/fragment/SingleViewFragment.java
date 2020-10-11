@@ -47,14 +47,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.linuxsenpai.konachan.DetailsTransition;
 import org.linuxsenpai.konachan.R;
-import org.linuxsenpai.konachan.Tasks.DownloadImageViewTask;
-import org.linuxsenpai.konachan.Tasks.SetTagListTask;
+import org.linuxsenpai.konachan.tasks.DownloadImageViewTask;
+import org.linuxsenpai.konachan.tasks.SetTagListTask;
 import org.linuxsenpai.konachan.api.Cursor;
 import org.linuxsenpai.konachan.db.AppDatabase;
 import org.linuxsenpai.konachan.db.Post;
 import org.linuxsenpai.konachan.preference.SharedPreference;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -414,6 +413,10 @@ public class SingleViewFragment extends Fragment {
 				return true;
 			case R.id.action_information:
 				DisplayInformationFragment();
+				return true;
+			case R.id.action_tag_information:
+				return true;
+			case R.id.action_search:
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

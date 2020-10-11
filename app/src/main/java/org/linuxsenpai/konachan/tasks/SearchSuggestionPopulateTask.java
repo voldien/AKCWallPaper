@@ -1,4 +1,4 @@
-package org.linuxsenpai.konachan.Tasks;
+package org.linuxsenpai.konachan.tasks;
 
 import android.content.Context;
 import android.content.SharedPreferences;

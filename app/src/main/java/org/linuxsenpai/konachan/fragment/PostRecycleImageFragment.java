@@ -29,8 +29,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.transition.TransitionInflater;
 
-import org.linuxsenpai.konachan.Events.SearchQueryListener;
-import org.linuxsenpai.konachan.Events.SearchQuerySuggestionListener;
+import org.linuxsenpai.konachan.events.SearchQueryListener;
+import org.linuxsenpai.konachan.events.SearchQuerySuggestionListener;
 import org.linuxsenpai.konachan.ItemOffsetDecoration;
 import org.linuxsenpai.konachan.R;
 import org.linuxsenpai.konachan.activity.MainActivity;

@@ -1,4 +1,4 @@
-package org.linuxsenpai.konachan.Tasks;
+package org.linuxsenpai.konachan.tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -52,6 +52,23 @@ public class DownloadJsonTask extends AsyncTask<String, Void, JSONArray> {
 		}
 		return mIcon11;
 	}
+
+	//TODO make part of the application and reference it.
+/*	public static String loadFileString(String localResource) throws IOException {
+
+		InputStream inputStream;
+		BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStream));
+		StringBuilder responseStrBuilder = new StringBuilder();
+		String line;
+		line = streamReader.readLine();
+
+		do {
+			responseStrBuilder.append(line);
+			line = streamReader.readLine();
+		} while (line != null);
+
+		return responseStrBuilder.toString();
+	}*/
 
 	protected void onPostExecute(JSONArray result) {
 		/*  */

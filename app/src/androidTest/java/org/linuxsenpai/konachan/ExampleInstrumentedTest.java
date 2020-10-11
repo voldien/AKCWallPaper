@@ -1,7 +1,6 @@
 package org.linuxsenpai.konachan;
 
 import android.content.Context;
-import android.widget.ImageView;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -11,14 +10,12 @@ import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.linuxsenpai.konachan.Tasks.DownloadImageViewTask;
 import org.linuxsenpai.konachan.api.Cursor;
 import org.linuxsenpai.konachan.api.MetaController;
 import org.linuxsenpai.konachan.db.AppDatabase;
 import org.linuxsenpai.konachan.db.Post;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLConnection;
 
 import static org.junit.Assert.assertEquals;
@@ -42,19 +39,19 @@ public class ExampleInstrumentedTest {
 	}
 
 	@Test
-	public void Preference_Use_Http_Request(){
+	public void Preference_Use_Http_Request() {
 		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 		//URLConnection connection = Network.GetContextConnection(appContext, "");
 		//connection instanceof
 		//connection.
 	}
 
-	public void Preference_Use_Https_Request(){
+	public void Preference_Use_Https_Request() {
 
 	}
 
 	@Test
-	public void API_LoadCursor(){
+	public void API_LoadCursor() {
 		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 		AppDatabase appDatabase = AppDatabase.getAppDatabase(appContext);
 		assertNotNull(appDatabase);
@@ -77,30 +74,15 @@ public class ExampleInstrumentedTest {
 	}
 
 	@Test
-	public void Preference_variable_state(){
+	public void Preference_variable_state() {
 
 	}
+
 
 	@Test
-	public void LoadImage_download() {
-		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
-		ImageView imageView = new ImageView(appContext);
-		DownloadImageViewTask downloadImageViewTask = new DownloadImageViewTask(imageView);
-		downloadImageViewTask.execute("https://konachan.net/data/preview/fc/67/fc6726cdbd392785aee01ab4f7757caa.jpg");
-	}
-
-	@Test
-	public void LoadTags_download(){
+	public void MetaController_Load_PostData() {
 
 	}
-
-	@Test
-	public void MetaController_Load_PostData(){
-
-	}
-
-
 
 
 	@Test(expected = Test.None.class)

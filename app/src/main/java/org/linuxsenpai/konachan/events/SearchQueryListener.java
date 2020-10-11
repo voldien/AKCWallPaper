@@ -1,4 +1,4 @@
-package org.linuxsenpai.konachan.Events;
+package org.linuxsenpai.konachan.events;
 
 import android.content.Context;
 import android.widget.SearchView;
@@ -6,7 +6,7 @@ import android.widget.SearchView;
 import androidx.preference.PreferenceManager;
 
 import org.linuxsenpai.konachan.R;
-import org.linuxsenpai.konachan.Tasks.SearchSuggestionPopulateTask;
+import org.linuxsenpai.konachan.tasks.SearchSuggestionPopulateTask;
 import org.linuxsenpai.konachan.adapter.SearchSuggestionAdapter;
 import org.linuxsenpai.konachan.db.AppDatabase;
 import org.linuxsenpai.konachan.db.History;

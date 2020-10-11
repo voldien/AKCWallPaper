@@ -74,8 +74,17 @@ public class ParcelTest {
 	}
 
 	@Test
-	public void Note_Parcel_Constructed_Corrected_Order(){
+	public void Note_Parcel_Constructed_Corrected_Order() {
 		Note note = new Note();
+		note.x = 142;
+		note.y = 534;
+		note.id = 23;
+		note.post_id = 3223;
+		note.width = 233;
+		note.height = 224;
+		note.body = "Information";
+		note.created_date = 11133342;
+		note.version = 1;
 
 		Parcel parcel = Parcel.obtain();
 		note.writeToParcel(parcel, 0);
@@ -95,13 +104,14 @@ public class ParcelTest {
 		Assert.assertEquals(note.version, note1.version);
 	}
 
-	public void Wiki_ParcelConstructed_Corrected_Order(){
+	public void Wiki_ParcelConstructed_Corrected_Order() {
 		Wiki wiki = new Wiki();
 
 		Parcel parcel = Parcel.obtain();
 		wiki.writeToParcel(parcel, 0);
 		parcel.setDataPosition(0);
 
+		/*  Check the result is equal.   */
 		Wiki wiki1 = Wiki.CREATOR.createFromParcel(parcel);
 		Assert.assertEquals(wiki.uid, wiki1.uid);
 		Assert.assertEquals(wiki.created_at, wiki1.created_at);

@@ -38,13 +38,19 @@ public class Tag implements Parcelable {
 	}
 
 	public TagType getType() {
-
 		switch (this.type) {
-			case 1:
-				return TagType.Character;
-			case 2:
-			case 3:
 			case 0:
+				return TagType.General;
+			case 1:
+				return TagType.Artist;
+			case 2:
+				return TagType.Style;
+			case 3:
+				return TagType.CopyRight;
+			case 4:
+				return TagType.Character;
+			case 5:
+				return TagType.Circle;
 			default:
 				return TagType.Any;
 		}

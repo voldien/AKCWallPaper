@@ -21,7 +21,7 @@ import androidx.transition.Fade;
 
 import org.linuxsenpai.konachan.DetailsTransition;
 import org.linuxsenpai.konachan.R;
-import org.linuxsenpai.konachan.Tasks.FetchDisplayImageHolderItem;
+import org.linuxsenpai.konachan.tasks.FetchDisplayImageHolderItem;
 import org.linuxsenpai.konachan.api.Cursor;
 import org.linuxsenpai.konachan.api.MetaController;
 import org.linuxsenpai.konachan.db.Post;

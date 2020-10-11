@@ -1,4 +1,4 @@
-package org.linuxsenpai.konachan.Tasks;
+package org.linuxsenpai.konachan.tasks;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;

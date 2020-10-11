@@ -1,7 +1,5 @@
 package org.linuxsenpai.konachan;
 
-import android.os.Parcel;
-
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -28,6 +26,7 @@ public class APIUnitTest {
 
 	}
 
+	//TODO make part of the application and reference it.
 	@NotNull
 	private String loadFileString(String localResource) throws IOException {
 
@@ -52,10 +51,12 @@ public class APIUnitTest {
 		return new JSONArray(loadFileString(localResource));
 	}
 
+	@Test
 	public void Parse_JSON_No_Throw() {
 
 	}
 
+	//TODO resolve date creation.
 	@Test(expected = Test.None.class)
 	public void Parse_Post_Item_Correctly() throws JSONException, IOException {
 		JSONObject object = loadJsonArray("post.json").getJSONObject(0);
@@ -65,10 +66,10 @@ public class APIUnitTest {
 		Assert.assertEquals(post.tags, "arknights qtian tomimi_(arknights)");
 		Assert.assertEquals(post.author, "BattlequeenYume");
 		Assert.assertEquals(post.file_size, 1738489);
-		Assert.assertEquals(post.is_shown_in_index, true);
+		Assert.assertTrue(post.is_shown_in_index);
 		Assert.assertEquals(post.actual_preview_width, 300);
 		Assert.assertEquals(post.actual_preview_height, 212);
-		Assert.assertEquals(post.hasChildren, false);
+		Assert.assertFalse(post.hasChildren);
 		Assert.assertEquals(post.parent_id, -1);
 		Assert.assertEquals(post.rating, "q");
 	}
@@ -84,6 +85,7 @@ public class APIUnitTest {
 		Assert.assertEquals(tag.name, "long_hair");
 		Assert.assertEquals(tag.count, 93238);
 		Assert.assertEquals(tag.type, 0);
+		Assert.assertEquals(tag.getType(), TagType.General);
 	}
 
 	@Test(expected = Test.None.class)
@@ -114,7 +116,7 @@ public class APIUnitTest {
 		Assert.assertEquals(wiki.updated_at, 0);
 		Assert.assertEquals(wiki.title, "alice_in_musicland_(vocaloid)");
 		Assert.assertEquals(wiki.updater_id, 96529);
-		Assert.assertEquals(wiki.locked, false);
+		Assert.assertFalse(wiki.locked);
 		Assert.assertEquals(wiki.version, 1);
 	}
 }

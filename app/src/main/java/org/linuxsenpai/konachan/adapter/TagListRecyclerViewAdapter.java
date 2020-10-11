@@ -3,7 +3,9 @@ package org.linuxsenpai.konachan.adapter;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -15,7 +17,6 @@ import org.linuxsenpai.konachan.R;
 import org.linuxsenpai.konachan.db.Tag;
 
 import java.util.List;
-
 
 //TODO rename
 public class TagListRecyclerViewAdapter extends RecyclerView.Adapter<TagListRecyclerViewAdapter.ViewHolder> {
@@ -53,7 +54,7 @@ public class TagListRecyclerViewAdapter extends RecyclerView.Adapter<TagListRecy
 		return tagList.size();
 	}
 
-	public static class ViewHolder extends RecyclerView.ViewHolder {
+	public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 		public View mView;
 		public TextView mIdView;
 		public TextView mContentView;
@@ -76,15 +77,35 @@ public class TagListRecyclerViewAdapter extends RecyclerView.Adapter<TagListRecy
 					//((Activity) (mIdView.getContext())).setIntent(intent);
 				}
 			});
-			mView.setOnLongClickListener(new View.OnLongClickListener() {
+			//TODO add menu
+			mView.setOnCreateContextMenuListener(this);
+/*			mView.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View v) {
-					/*  Make menu option display.   */
+					*//*  Make menu option display.   *//*
 					v.showContextMenu();
-					/*  */
+					*//*  *//*
 					return false;
 				}
+			});*/
+		}
+
+		@Override
+		public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+			menu.setHeaderTitle("Select The Action");
+			menu.add(R.string.search).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					return true;
+				}
 			});
+			menu.add(0, v.getId(), 0, "B").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					return true;
+				}
+			});
+
 		}
 
 		@Override

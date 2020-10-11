@@ -1,4 +1,4 @@
-package org.linuxsenpai.konachan.Events;
+package org.linuxsenpai.konachan.events;
 
 
 import android.view.View;

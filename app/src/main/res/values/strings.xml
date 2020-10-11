@@ -68,4 +68,6 @@
 	<string name="key_use_cache">UseCache</string>
 	<string name="progressbar_desc">display process</string>
 	<string name="image_favorite_icon_desc">favorite</string>
+	<string name="search">Search</string>
+	<string name="wiki_page">Wiki Page</string>
 </resources>
