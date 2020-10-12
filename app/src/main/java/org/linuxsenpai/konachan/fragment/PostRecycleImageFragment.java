@@ -29,14 +29,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.transition.TransitionInflater;
 
-import org.linuxsenpai.konachan.events.SearchQueryListener;
-import org.linuxsenpai.konachan.events.SearchQuerySuggestionListener;
 import org.linuxsenpai.konachan.ItemOffsetDecoration;
 import org.linuxsenpai.konachan.R;
 import org.linuxsenpai.konachan.activity.MainActivity;
 import org.linuxsenpai.konachan.adapter.PostImagesAdapter;
 import org.linuxsenpai.konachan.adapter.SearchSuggestionAdapter;
 import org.linuxsenpai.konachan.api.MetaController;
+import org.linuxsenpai.konachan.events.SearchQueryListener;
+import org.linuxsenpai.konachan.events.SearchQuerySuggestionListener;
 
 import java.util.List;
 import java.util.Map;
@@ -164,14 +164,16 @@ public class PostRecycleImageFragment extends Fragment {
 
 		// Associate searchable configuration with the SearchView
 		MainActivity mainActivity = (MainActivity) getActivity();
-		mainActivity.getSearchView().observe(getViewLifecycleOwner(), new Observer<SearchView>() {
-			@Override
-			public void onChanged(SearchView searchView) {
-				searchView.setSuggestionsAdapter(SearchAdapter);
-				searchView.setOnSuggestionListener(new SearchQuerySuggestionListener(searchView, SearchAdapter));
-				searchView.setOnQueryTextListener(new SearchQueryListener(getContext(), searchView, SearchAdapter, viewModel));
-			}
-		});
+		if (mainActivity != null) {
+			mainActivity.getSearchView().observe(getViewLifecycleOwner(), new Observer<SearchView>() {
+				@Override
+				public void onChanged(SearchView searchView) {
+					searchView.setSuggestionsAdapter(SearchAdapter);
+					searchView.setOnSuggestionListener(new SearchQuerySuggestionListener(searchView, SearchAdapter));
+					searchView.setOnQueryTextListener(new SearchQueryListener(getContext(), searchView, SearchAdapter, viewModel));
+				}
+			});
+		}
 	}
 
 	@Override

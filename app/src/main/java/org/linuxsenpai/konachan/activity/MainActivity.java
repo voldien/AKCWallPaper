@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.LinkProperties;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.net.http.HttpResponseCache;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,12 +33,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.linuxsenpai.konachan.R;
+import org.linuxsenpai.konachan.adapter.NavigationCollectionPagerAdapter;
 import org.linuxsenpai.konachan.api.MetaController;
-import org.linuxsenpai.konachan.fragment.PostRecycleImageFragment;
 import org.linuxsenpai.konachan.preference.SharedPreference;
 
 import java.io.File;
@@ -46,7 +53,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 	public static final String KEY_SEARCH_QUERY = "query";
-
+	public static final String[] TAB_LABELS = {"Post", "Tag", "Wiki", "Favorite", "History"};
 	private static final String TAG = "MainActivity";
 	public MutableLiveData<SearchView> searchView;
 	public SwipeRefreshLayout swipeRefreshLayout;
@@ -56,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo ni = manager.getActiveNetworkInfo();
+			//NetworkInfo ni = manager.registerNetworkCallback(NetworkRequest.);
 			//doSomethingOnNetworkChange(ni);
 		}
 	};
@@ -85,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scrolling);
+		View parentLayout = findViewById(android.R.id.content);
 		MetaController.getInstance(this);
+
 		searchView = new MutableLiveData<>();
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,24 +104,52 @@ public class MainActivity extends AppCompatActivity {
 		ValidateStatusOfApp();
 
 		initHttpCache();
+		initNetworkStatusFeedback(parentLayout);
+
+
+
+
+
+/*		connectivityManager.registerNetworkCallback(networkRequest,
+				object : ConnectivityManager.NetworkCallback () {
+			override fun onAvailable(network: Network?) {
+				super.onAvailable(network)
+				Log.i("Test", "Network Available")
+			}
+
+			override fun onLost(network: Network?) {
+				super.onLost(network)
+				Log.i("Test", "Connection lost")
+			}
+		})*/
+
+		/*  */
+		ViewPager2 viewPager = findViewById(R.id.pager);
+		viewPager.setAdapter(new NavigationCollectionPagerAdapter(this));
+
+		TabLayout tabLayout = findViewById(R.id.tab_layout);
+		new TabLayoutMediator(tabLayout, viewPager,
+				(tab, position) -> tab.setText(TAB_LABELS[position])
+		).attach();
+
 
 		/*  Create main fragment.   */
 		//TODO determine if need to be relocated based on the savedInstance.
 
 		//TODO make a intent for a sync call.
 		if (savedInstanceState == null) {
-			FragmentManager fragmentManager = getSupportFragmentManager();
+/*			FragmentManager fragmentManager = getSupportFragmentManager();
 			FragmentTransaction transaction = fragmentManager.beginTransaction();
 			transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 			transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim, R.anim.nav_default_pop_enter_anim, R.anim.nav_default_pop_exit_anim);
 			transaction.replace(R.id.main_fragment, PostRecycleImageFragment.newInstance("", 1, null));
 			transaction.addToBackStack("PostRecycleFragment");
-			transaction.commit();/**/
+			transaction.commit();*//**//*
 
 //			(viewGroup.getMeasuredHeight()/3) - (marginTop + marginBot)
 			SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
 			Intent intent = new Intent(Intent.ACTION_SEARCH);
-			intent.putExtra(SearchManager.QUERY, "");
+			intent.putExtra(SearchManager.QUERY, "");*/
 
 			// Get the intent, verify the action and get the query
 			handleIntent(getIntent());
@@ -159,6 +196,39 @@ public class MainActivity extends AppCompatActivity {
 			releaseHttpCache();
 			View parentLayout = findViewById(android.R.id.content);
 			Snackbar.make(parentLayout, getString(R.string.text_error_create_http_cache), Snackbar.LENGTH_SHORT).show();
+		}
+	}
+
+	private void initNetworkStatusFeedback(View parentLayout){
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+			ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+			NetworkRequest.Builder builder = null;
+			builder = new NetworkRequest.Builder();
+			builder.addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
+			NetworkRequest networkRequest = builder.build();
+			connectivityManager.registerNetworkCallback(networkRequest, new ConnectivityManager.NetworkCallback(){
+				@Override
+				public void onLost(@NonNull Network network) {
+					super.onLost(network);
+					Snackbar.make(parentLayout, getResources().getText(R.string.network_lost), Snackbar.LENGTH_SHORT ).show();
+				}
+
+				@Override
+				public void onAvailable(@NonNull Network network) {
+					super.onAvailable(network);
+				}
+
+				@Override
+				public void onLosing(@NonNull Network network, int maxMsToLive) {
+					super.onLosing(network, maxMsToLive);
+				}
+
+				@Override
+				public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
+					super.onLinkPropertiesChanged(network, linkProperties);
+				}
+			});
 		}
 	}
 
@@ -276,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
 			FragmentTransaction transaction = fragmentManager.beginTransaction();
 			transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 			transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim, R.anim.nav_default_pop_enter_anim, R.anim.nav_default_pop_exit_anim);
-			transaction.replace(R.id.main_fragment, PostRecycleImageFragment.newInstance(query, 1, null));
+			//transaction.replace(R.id.main_fragment, PostRecycleImageFragment.newInstance(query, 1, null));
 			transaction.addToBackStack(null);
 			transaction.commit();/**/
 		}
@@ -321,9 +391,6 @@ public class MainActivity extends AppCompatActivity {
 			case R.id.action_tagpage:
 				DisplayTagSearchFragment();
 				return true;
-			case R.id.action_saveuser:
-				DisplayUserSavedData();
-				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -341,10 +408,5 @@ public class MainActivity extends AppCompatActivity {
 
 	private void DisplayTagSearchFragment() {
 		/*  */
-	}
-
-	private void DisplayUserSavedData() {
-		Intent user_preference = new Intent(this, UserSavingActivity.class);
-		this.startActivity(user_preference);
 	}
 }

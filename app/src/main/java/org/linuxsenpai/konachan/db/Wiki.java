@@ -13,25 +13,6 @@ import java.util.Date;
 @Entity
 public class Wiki implements Parcelable {
 
-	@PrimaryKey
-	public int uid;
-	public long created_at;
-	public long updated_at;
-	public String title;
-	@ColumnInfo(typeAffinity = Types.BLOB)
-	public String body;
-	public int updater_id;
-	public boolean locked;
-	public int version;
-
-	public Date getDate() {
-		return new Date(this.created_at);
-	}
-
-	public Date getModifedDate() {
-		return new Date(this.updated_at);
-	}
-
 	public static final Creator<Wiki> CREATOR = new Creator<Wiki>() {
 		@Override
 		public Wiki createFromParcel(Parcel in) {
@@ -43,6 +24,16 @@ public class Wiki implements Parcelable {
 			return new Wiki[size];
 		}
 	};
+	@PrimaryKey
+	public int uid;
+	public long created_at;
+	public long updated_at;
+	public String title;
+	@ColumnInfo(typeAffinity = Types.BLOB)
+	public String body;
+	public int updater_id;
+	public boolean locked;
+	public int version;
 
 	public Wiki() {
 
@@ -52,6 +43,14 @@ public class Wiki implements Parcelable {
 
 		body = in.readString();
 		version = in.readInt();
+	}
+
+	public Date getDate() {
+		return new Date(this.created_at);
+	}
+
+	public Date getModifedDate() {
+		return new Date(this.updated_at);
 	}
 
 	@Override

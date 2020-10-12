@@ -21,11 +21,11 @@ import androidx.transition.Fade;
 
 import org.linuxsenpai.konachan.DetailsTransition;
 import org.linuxsenpai.konachan.R;
-import org.linuxsenpai.konachan.tasks.FetchDisplayImageHolderItem;
 import org.linuxsenpai.konachan.api.Cursor;
 import org.linuxsenpai.konachan.api.MetaController;
 import org.linuxsenpai.konachan.db.Post;
 import org.linuxsenpai.konachan.fragment.SingleViewFragment;
+import org.linuxsenpai.konachan.tasks.FetchDisplayImageHolderItem;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -173,8 +173,7 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter.Vi
 					transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 					transaction.addSharedElement(imageView, ViewCompat.getTransitionName(imageView));
 					transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim, R.anim.nav_default_pop_enter_anim, R.anim.nav_default_pop_exit_anim);
-
-					transaction.add(R.id.main_fragment, singleViewFragment);
+					transaction.add(singleViewFragment, "");
 					transaction.addToBackStack(null);
 					transaction.commit();
 

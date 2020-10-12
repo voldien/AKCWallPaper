@@ -27,9 +27,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MetaController {
 	static public final String TAG = "Meta";
 	public static MetaController controller;
+	private final AtomicInteger page;
 	private ArrayList<JSONArray> postItem;
 	private ArrayList<Integer> pageIndex;
-	private final AtomicInteger page;
 	private int pageSize = 50;
 	private Context context;
 	private SharedPreferences preferences;

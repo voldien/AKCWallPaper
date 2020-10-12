@@ -20,6 +20,14 @@ import org.linuxsenpai.konachan.db.History;
 
 public class HistoryFragment extends Fragment {
 
+
+	public static HistoryFragment newInstance() {
+		HistoryFragment fragment = new HistoryFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         ViewGroup container, Bundle savedInstanceState) {
 		HistoryViewModel historyViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);

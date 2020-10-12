@@ -14,12 +14,12 @@ import org.linuxsenpai.konachan.db.Post;
 import org.linuxsenpai.konachan.preference.SharedPreference;
 
 public class FetchDisplayImageHolderItem extends AsyncTask<Void, Void, Void> {
+	static final String TAG = "Download";
 	PostImagesAdapter.ViewHolder viewHolder;
 	Bitmap result;
 	int offset;
 	private Cursor<Post> postCursor;
 	private LruCache<String, Bitmap> memoryCache;
-	static final String TAG ="Download";
 
 	public FetchDisplayImageHolderItem(PostImagesAdapter.ViewHolder holder, LruCache<String, Bitmap> memoryCache, Cursor<Post> postCursor, int position) {
 		this.viewHolder = holder;

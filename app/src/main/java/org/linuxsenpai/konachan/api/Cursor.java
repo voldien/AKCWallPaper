@@ -5,10 +5,10 @@ import androidx.annotation.NonNull;
 import org.json.JSONException;
 
 public class Cursor<T> {
+	private final API type;
 	public String name;
 	public int current;
 	private MetaController controller;
-	private final API type;
 
 	public Cursor(MetaController controller, @NonNull String tag, API type) {
 		this.controller = controller;

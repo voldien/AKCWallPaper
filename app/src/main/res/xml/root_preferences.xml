@@ -45,10 +45,6 @@
 			app:dependency="disk_cache"
 			app:key="disk_cache_seekbar" />
 
-		<Preference
-			android:layout="@layout/clear_button"
-			android:key="loginButtons" />
-
 	</PreferenceCategory>
 
 </PreferenceScreen>

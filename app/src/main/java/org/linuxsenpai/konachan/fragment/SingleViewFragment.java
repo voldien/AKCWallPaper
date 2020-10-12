@@ -47,12 +47,12 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.linuxsenpai.konachan.DetailsTransition;
 import org.linuxsenpai.konachan.R;
-import org.linuxsenpai.konachan.tasks.DownloadImageViewTask;
-import org.linuxsenpai.konachan.tasks.SetTagListTask;
 import org.linuxsenpai.konachan.api.Cursor;
 import org.linuxsenpai.konachan.db.AppDatabase;
 import org.linuxsenpai.konachan.db.Post;
 import org.linuxsenpai.konachan.preference.SharedPreference;
+import org.linuxsenpai.konachan.tasks.DownloadImageViewTask;
+import org.linuxsenpai.konachan.tasks.SetTagListTask;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -430,7 +430,7 @@ public class SingleViewFragment extends Fragment {
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim, R.anim.nav_default_pop_enter_anim, R.anim.nav_default_pop_exit_anim);
-		transaction.add(R.id.main_fragment, informationFragment);
+		//transaction.add(R.id.main_fragment, informationFragment);
 		transaction.addToBackStack(null);
 		transaction.commit();/**/
 	}
@@ -484,7 +484,7 @@ public class SingleViewFragment extends Fragment {
 			singleViewFragment.setSharedElementReturnTransition(new DetailsTransition());
 		}
 		transaction.addSharedElement(imageSwipeFragment.getCurrentImageView(), ViewCompat.getTransitionName(imageSwipeFragment.getCurrentImageView()));
-		transaction.add(R.id.main_fragment, singleViewFragment);
+		//transaction.add(R.id.main_fragment, singleViewFragment);
 		transaction.addToBackStack(null);
 		transaction.commit();
 	}

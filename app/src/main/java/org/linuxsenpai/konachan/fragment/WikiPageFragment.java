@@ -11,12 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.linuxsenpai.konachan.R;
+import org.linuxsenpai.konachan.db.Wiki;
 
 public class WikiPageFragment extends Fragment {
 
 	private WikiPageViewModel mViewModel;
 
-	public static WikiPageFragment newInstance() {
+	public static WikiPageFragment newInstance(Wiki wiki) {
 		return new WikiPageFragment();
 	}
 

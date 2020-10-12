@@ -6,11 +6,11 @@ import android.widget.SearchView;
 import androidx.preference.PreferenceManager;
 
 import org.linuxsenpai.konachan.R;
-import org.linuxsenpai.konachan.tasks.SearchSuggestionPopulateTask;
 import org.linuxsenpai.konachan.adapter.SearchSuggestionAdapter;
 import org.linuxsenpai.konachan.db.AppDatabase;
 import org.linuxsenpai.konachan.db.History;
 import org.linuxsenpai.konachan.fragment.RecycleImageViewModel;
+import org.linuxsenpai.konachan.tasks.SearchSuggestionPopulateTask;
 
 import java.util.Calendar;
 

@@ -23,6 +23,13 @@ import java.util.List;
 
 public class FavoriteFragment extends Fragment {
 
+	public static FavoriteFragment newInstance() {
+		FavoriteFragment fragment = new FavoriteFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         ViewGroup container, Bundle savedInstanceState) {
 		FavoriteViewModel favoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
