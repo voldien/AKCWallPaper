@@ -2,6 +2,7 @@ package org.linuxsenpai.konachan.tasks;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
 
 import org.linuxsenpai.konachan.Network;
@@ -33,5 +34,6 @@ public class DownloadImageViewTask extends AsyncTask<String, Void, Bitmap> {
 			bmImage.setImageBitmap(result);
 		else
 			bmImage.setImageResource(R.drawable.ic_get_app);
+		this.bmImage.setVisibility(View.VISIBLE);
 	}
 }

@@ -6,22 +6,14 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.linuxsenpai.konachan.api.Cursor;
-import org.linuxsenpai.konachan.api.MetaController;
-import org.linuxsenpai.konachan.db.AppDatabase;
-import org.linuxsenpai.konachan.db.Post;
 
 import java.io.IOException;
 import java.net.URLConnection;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -50,28 +42,6 @@ public class ExampleInstrumentedTest {
 
 	}
 
-	@Test
-	public void API_LoadCursor() {
-		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-		AppDatabase appDatabase = AppDatabase.getAppDatabase(appContext);
-		assertNotNull(appDatabase);
-
-		MetaController metaController = MetaController.getInstance(appContext);
-		assertNotNull(metaController);
-		Cursor<Post> postCursor = metaController.getPostItems("cat");
-		assertNotNull(postCursor);
-
-		Post post = null;
-		try {
-			post = postCursor.next();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		assertNotNull(post);
-		assertTrue(post.tags.contains("cat"));
-		assertFalse(postCursor.hasPrevious());
-		assertTrue(postCursor.hasNext());
-	}
 
 	@Test
 	public void Preference_variable_state() {
@@ -85,7 +55,7 @@ public class ExampleInstrumentedTest {
 	}
 
 
-	@Test(expected = Test.None.class)
+	@Test()
 	public void NetworkCreateConnection_NoThrow() throws IOException {
 		String url = "https://konachan.net/post.json?tags=";
 		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();

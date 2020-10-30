@@ -38,20 +38,25 @@ public class HistoryAdapter extends PagedListAdapter<History, HistoryAdapter.His
 		super(DIFF_CALLBACK);
 	}
 
+	@Override
+	public int getItemViewType(int position) {
+		return R.layout.item_information_view;
+	}
+
 	@NonNull
 	@Override
 	public HistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_information_view, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
 
+		//TODO add click event.
 		view.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				return false;
 			}
 		});
-		HistoryViewHolder holder = new HistoryViewHolder(view);
-		//TODO add click event.
-		return holder;
+
+		return new HistoryViewHolder(view);
 	}
 
 	@Override
@@ -67,18 +72,22 @@ public class HistoryAdapter extends PagedListAdapter<History, HistoryAdapter.His
 	}
 
 	public static class HistoryViewHolder extends RecyclerView.ViewHolder {
-		private TextView textView;
+		private final TextView textView;
+		private final TextView textValueView;
 
 		public HistoryViewHolder(@NonNull View itemView) {
 			super(itemView);
-			textView = (TextView) itemView.findViewById(R.id.textview);
+			textView = itemView.findViewById(R.id.textview);
+			textValueView = itemView.findViewById(R.id.textviewvalue);
 		}
 
 		public void clear() {
+
 		}
 
 		public void bindTo(History history) {
 			textView.setText(history.name);
+			textValueView.setText(history.getDate().toString());
 		}
 	}
 }

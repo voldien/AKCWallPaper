@@ -31,6 +31,7 @@ public class InformationFragment extends Fragment {
 
 	}
 
+	//TODO change so that it can take all type of API data types.
 	public static InformationFragment newInstance(@NonNull Post post, @NonNull String[] keys) {
 		InformationFragment fragment = new InformationFragment();
 		Bundle args = new Bundle();
@@ -45,15 +46,8 @@ public class InformationFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setMenuVisibility(false);
-	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
 		informationViewModel = new ViewModelProvider(this).get(InformationViewModel.class);
-		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_information, container, false);
-		this.listview = view.findViewById(R.id.listview);
 
 		informationViewModel.getInformation().observe(getViewLifecycleOwner(), new Observer<Post>() {
 			@Override
@@ -61,6 +55,14 @@ public class InformationFragment extends Fragment {
 				listview.setAdapter(new InformationViewApdater(post, keys));
 			}
 		});
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		View view = inflater.inflate(R.layout.fragment_information, container, false);
+		this.listview = view.findViewById(R.id.listview);
 
 		if (getArguments() != null) {
 			Post post = getArguments().getParcelable(ARG_POST_OBJECT);

@@ -7,18 +7,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.linuxsenpai.konachan.R;
-import org.linuxsenpai.konachan.fragment.SingleViewFragment;
+
 
 public class SingleViewImageSwipeOnTouch implements View.OnTouchListener {
 
-	ImageSwitcher imageSwitcher;
-	SingleViewFragment singleViewFragment;
+	final ImageSwitcher imageSwitcher;
+	//SingleViewFragment singleViewFragment;
 	int current_position;
 	//SwipeGestureDetector swipeGestureDetector;
 	float initialX;
 
-	public SingleViewImageSwipeOnTouch(SingleViewFragment singleViewFragment, ImageSwitcher switcher) {
-		this.singleViewFragment = singleViewFragment;
+	public SingleViewImageSwipeOnTouch(ImageSwitcher switcher) {
+		//this.singleViewFragment = singleViewFragment;
 		this.imageSwitcher = switcher;
 	}
 

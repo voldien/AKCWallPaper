@@ -25,7 +25,7 @@ public class Note implements Parcelable {
 	};
 	@PrimaryKey
 	public int id;
-	public int created_date;
+	public long created_date;
 	public int x;
 	public int y;
 	public int width;
@@ -34,6 +34,7 @@ public class Note implements Parcelable {
 	public int post_id;
 	public String body;
 	public int version;
+	public long modified_date;
 
 	public Note() {
 
@@ -41,7 +42,7 @@ public class Note implements Parcelable {
 
 	protected Note(Parcel in) {
 		id = in.readInt();
-		created_date = in.readInt();
+		created_date = in.readLong();
 		x = in.readInt();
 		y = in.readInt();
 		width = in.readInt();
@@ -51,8 +52,12 @@ public class Note implements Parcelable {
 		version = in.readInt();
 	}
 
-	public Date getDate() {
+	public Date getCreateDate() {
 		return new Date(this.created_date);
+	}
+
+	public Date getModifiedDate() {
+		return new Date(this.modified_date);
 	}
 
 	@Override
@@ -63,7 +68,7 @@ public class Note implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(id);
-		dest.writeInt(created_date);
+		dest.writeLong(created_date);
 		dest.writeInt(x);
 		dest.writeInt(y);
 		dest.writeInt(width);
@@ -72,7 +77,4 @@ public class Note implements Parcelable {
 		dest.writeString(body);
 		dest.writeInt(version);
 	}
-
-	//https://konachan.com/note.json?post_id=312859
-	//[{"id":7396,"created_at":"2020-08-12T18:10:52.623Z","updated_at":"2020-08-12T18:10:52.623Z","creator_id":156425,"x":2219,"y":176,"width":150,"height":150,"is_active":true,"post_id":312859,"body":"Yonagi Kei\n(Act-Age)","version":1},
 }

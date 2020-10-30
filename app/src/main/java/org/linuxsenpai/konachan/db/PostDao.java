@@ -17,11 +17,11 @@ public interface PostDao {
 	@Query("SELECT * FROM Post WHERE uid IN (:userIds)")
 	List<Post> loadAllByIds(int[] userIds);
 
-	@Query("SELECT * FROM Post ORDER BY uid LIMIT 1 OFFSET (:offset)")
-	Post getOffset(int offset);
+	@Query("SELECT * FROM Post ORDER BY uid LIMIT (:length) OFFSET (:offset)")
+	List<Post> getOffset(int length, int offset);
 
-	@Query("SELECT * FROM Post WHERE tags LIKE (:tag) ORDER BY uid DESC LIMIT 1 OFFSET (:offset)")
-	Post getByTag(String tag, int offset);
+	@Query("SELECT * FROM Post WHERE tags LIKE (:tag) ORDER BY uid DESC LIMIT (:length) OFFSET (:offset)")
+	List<Post> getByTag(String tag, int length, int offset);
 
 	@Query("SELECT * FROM Post WHERE tags LIKE (:tag) ORDER BY date(created_at) ASC LIMIT (:num) OFFSET (:offset)")
 	List<Post> loadNumLatestCreated(String tag, int offset, int num);

@@ -14,7 +14,6 @@ import androidx.preference.PreferenceManager;
 import org.json.JSONArray;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -49,7 +48,6 @@ public class Network {
 		if (!preferenceManager.getBoolean("https", true))
 			protocol = "http";
 
-
 		String url = String.format("%s://%s/%s", protocol, domain, query);
 		return GetConnection(url);
 	}
@@ -70,7 +68,7 @@ public class Network {
 		if (responseCode != HttpURLConnection.HTTP_OK) {
 			throw new RuntimeException("Failed to connect");
 		}
-		return (FileInputStream) in;
+		return in;
 	}
 
 	public static InputStream GetHTTPStream(@NonNull String urlPath) throws IOException {
@@ -152,16 +150,16 @@ public class Network {
 
 	public static boolean isNetworkAvailable(@NonNull Context context) {
 		boolean available = false;
-		/** Getting the system's connectivity service */
+		/* Getting the system's connectivity service */
 		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-		/** Getting active network interface  to get the network's status */
+		/* Getting active network interface  to get the network's status */
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
 		if (networkInfo != null && networkInfo.isAvailable())
 			available = true;
 
-		/** Returning the status of the network */
+		/* Returning the status of the network */
 		return available;
 	}
 

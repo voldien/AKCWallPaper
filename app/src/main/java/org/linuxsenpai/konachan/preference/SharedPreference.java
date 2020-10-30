@@ -8,7 +8,6 @@ import org.linuxsenpai.konachan.db.AppDatabase;
 import org.linuxsenpai.konachan.db.Favorite;
 import org.linuxsenpai.konachan.db.Post;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SharedPreference {
@@ -18,8 +17,8 @@ public class SharedPreference {
 	}
 
 	public boolean isPostFavorite(Context context, @NonNull Post post) {
-		ArrayList<Favorite> favorites = (ArrayList<Favorite>) AppDatabase.getAppDatabase(context).favoriteDao().loadAllByIds(new int[]{post.uid});
-		return favorites.size() > 0;
+		Favorite favorites = AppDatabase.getAppDatabase(context).favoriteDao().getByPostID(post.uid);
+		return favorites != null;
 	}
 
 	public void addFavorite(Context context, Post postItem) {
@@ -30,17 +29,19 @@ public class SharedPreference {
 
 	public void removeFavorite(Context context, Post post) {
 		List<Favorite> favoriteList = AppDatabase.getAppDatabase(context).favoriteDao().loadAllByIds(new int[]{post.uid});
+
+		/*  Delete all favorite elements.   */
 		if (favoriteList != null && favoriteList.size() > 0) {
-			for (Favorite fav :
-					favoriteList) {
+			for (Favorite fav : favoriteList) {
 				AppDatabase.getAppDatabase(context).favoriteDao().delete(fav);
 			}
-
 		}
 	}
 
-	public List<Post> getFavorites(Context context) {
+	public List<Post> getFavoritePosts(Context context) {
 		List<Favorite> favoriteList = AppDatabase.getAppDatabase(context).favoriteDao().getAll();
+
+		/*  Create ID list.    */
 		int[] IDIndex = new int[favoriteList.size()];
 		for (int i = 0; i < favoriteList.size(); i++) {
 			IDIndex[i] = favoriteList.get(i).post_uid;

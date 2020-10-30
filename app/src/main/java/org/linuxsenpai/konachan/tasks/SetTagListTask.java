@@ -14,7 +14,7 @@ import java.util.List;
 public class SetTagListTask extends AsyncTask<Post, Void, List<Tag>> {
 
 
-	private TagListFragment tagListFragment;
+	private final TagListFragment tagListFragment;
 
 	public SetTagListTask(TagListFragment tagListFragment) {
 
@@ -31,7 +31,7 @@ public class SetTagListTask extends AsyncTask<Post, Void, List<Tag>> {
 			try {
 				Tag tag = MetaController.getInstance(tagListFragment.getContext()).getTag(tagKey);
 				tagArrayList.add(tag);
-			} catch (JSONException ex) {
+			} catch (JSONException ignored) {
 
 			}
 		}
@@ -41,7 +41,7 @@ public class SetTagListTask extends AsyncTask<Post, Void, List<Tag>> {
 	@Override
 	protected void onPostExecute(List<Tag> tags) {
 		super.onPostExecute(tags);
-		tagListFragment.setTagList(tags);
+		//tagListFragment.setTagList(tags);
 
 	}
 }

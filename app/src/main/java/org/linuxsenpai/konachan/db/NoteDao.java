@@ -13,12 +13,12 @@ public interface NoteDao {
 	@Query("SELECT * FROM Note")
 	List<Note> getAll();
 
-	@Query("SELECT * FROM Note WHERE post_id IN (:userIds)")
-	List<Note> loadAllByIds(int[] userIds);
+	@Query("SELECT * FROM Note WHERE post_id IN (:postid)")
+	List<Note> loadAllByIds(int postid);
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	void insertAll(List<Note> notes);
 
 	@Delete
-	void delete(Note post);
+	void delete(Note note);
 }

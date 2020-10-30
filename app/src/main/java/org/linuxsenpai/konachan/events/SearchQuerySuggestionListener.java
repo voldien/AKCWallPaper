@@ -7,8 +7,8 @@ import org.linuxsenpai.konachan.adapter.SearchSuggestionAdapter;
 
 public class SearchQuerySuggestionListener implements SearchView.OnSuggestionListener {
 
-	SearchSuggestionAdapter mSearchSuggestionAdapater;
-	SearchView searchView;
+	final SearchSuggestionAdapter mSearchSuggestionAdapater;
+	final SearchView searchView;
 
 	public SearchQuerySuggestionListener(SearchView searchView, SearchSuggestionAdapter adapter) {
 		this.searchView = searchView;

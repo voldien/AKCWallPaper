@@ -12,11 +12,10 @@
 	<!-- Messages Preferences -->
 
 	<!-- Sync Preferences -->
-	<string name="ram_cache_title">Use RAM Cache</string>
-	<string name="disk_cache_attachment">Download incoming attachments</string>
-	<string name="disk_cache_summary_on">Automatically download attachments for incoming emails
-	</string>
-	<string name="disk_cache_summary_off">Only download attachments when manually requested</string>
+	<string name="ram_cache_title">Use RAM Cache for Images</string>
+	<string name="disk_cache_attachment">Use Storage Cache</string>
+	<string name="disk_cache_summary_on">Disk cache enabled</string>
+	<string name="disk_cache_summary_off">Disk cache disabled</string>
 
 	<string name="menu_favorite">Favorite</string>
 	<string name="menu_history">History</string>
@@ -40,8 +39,8 @@
 	<string name="no_favorites_msg">Long press on item to add to favorites.</string>
 	<string name="favorites_remove_msg">Long press on item to remove from favorites.</string>
 	<string name="tooltip_action_bookmark">Set image as a local favorite</string>
-	<string name="ram_disk_summary_on">RAM cache will be used</string>
-	<string name="ram_disk_summary_off">RAM cache will not be used.</string>
+	<string name="ram_disk_summary_on">RAM cache for images is enabled.</string>
+	<string name="ram_disk_summary_off">RAM cache for images is disabled.</string>
 	<string name="settings_description">hello world</string>
 	<string name="search_label">cat</string>
 	<string name="download_image">Image Saved to local storage.</string>
@@ -71,4 +70,9 @@
 	<string name="search">Search</string>
 	<string name="wiki_page">Wiki Page</string>
 	<string name="network_lost">Network Lost</string>
+	<string name="action_download">Download</string>
+	<string name="action_favorite">Set Favorite</string>
+	<string name="disk_size_text_title">Disk Storage Limit</string>
+	<string name="disk_size_dialog_text">Disk Storage Limit</string>
+	<string name="menu_context_wiki_page">Wiki Page</string>
 </resources>

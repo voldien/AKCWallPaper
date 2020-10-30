@@ -1,5 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:theme="@style/PreferencesTheme">
 
 	<PreferenceCategory app:title="@string/setting_network_header">
 
@@ -17,6 +18,10 @@
 			app:defaultValue="true"
 			app:key="https"
 			app:title="Use HTTPS" />
+		<CheckBoxPreference
+			app:defaultValue="true"
+			app:key="@string/key_save_history"
+			app:title="Store search history" />
 
 	</PreferenceCategory>
 
@@ -28,22 +33,26 @@
 			app:title="UseCache" />
 
 		<SwitchPreferenceCompat
-			app:key="ram_cache"
 			app:dependency="useCache"
+			app:key="ram_cache"
 			app:summaryOff="@string/ram_disk_summary_off"
 			app:summaryOn="@string/ram_disk_summary_on"
 			app:title="@string/ram_cache_title" />
 
 		<SwitchPreferenceCompat
+			app:dependency="useCache"
 			app:key="disk_cache"
 			app:summaryOff="@string/disk_cache_summary_off"
 			app:summaryOn="@string/disk_cache_summary_on"
 			app:title="@string/disk_cache_attachment" />
 
-		<SeekBarPreference
-			android:title=""
+		<EditTextPreference
+			app:defaultValue="10MB"
 			app:dependency="disk_cache"
-			app:key="disk_cache_seekbar" />
+			app:dialogTitle="@string/disk_size_dialog_text"
+			app:key="disk_cache_text_format_size"
+			app:title="@string/disk_size_text_title"
+			app:useSimpleSummaryProvider="true" />
 
 	</PreferenceCategory>
 

@@ -8,6 +8,7 @@
 		android:id="@+id/search_suggestion_text"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_margin="1sp"
 		android:textColor="#ffffff"
 		android:textSize="@dimen/suggestion_textview_size" />
 

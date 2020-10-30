@@ -1,10 +1,13 @@
 package org.linuxsenpai.konachan.db;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import org.linuxsenpai.konachan.R;
 
 @Entity
 public class Tag implements Parcelable {
@@ -37,6 +40,10 @@ public class Tag implements Parcelable {
 
 	}
 
+	public static int getTagColor(Context context, int type) {
+		return context.getResources().getIntArray(R.array.tag_colors)[type];
+	}
+
 	public TagType getType() {
 		switch (this.type) {
 			case 0:
@@ -67,5 +74,9 @@ public class Tag implements Parcelable {
 		dest.writeString(name);
 		dest.writeInt(count);
 		dest.writeInt(type);
+	}
+
+	public int getTagColor(Context context) {
+		return getTagColor(context, this.type);
 	}
 }

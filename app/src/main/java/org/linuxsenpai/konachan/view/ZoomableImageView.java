@@ -14,22 +14,19 @@ public class ZoomableImageView extends androidx.appcompat.widget.AppCompatImageV
 	static final int DRAG = 1;
 	static final int ZOOM = 2;
 	static final int CLICK = 3;
-	Matrix matrix = new Matrix();
+	final Matrix matrix = new Matrix();
+	final PointF last = new PointF();
+	final PointF start = new PointF();
+	final float minScale = 1f;
+	final float[] m;
+	final ScaleGestureDetector mScaleDetector;
+	final Context context;
 	int mode = NONE;
-
-	PointF last = new PointF();
-	PointF start = new PointF();
-	float minScale = 1f;
 	float maxScale = 4f;
-	float[] m;
-
 	float redundantXSpace, redundantYSpace;
 	float width, height;
 	float saveScale = 1f;
 	float right, bottom, origWidth, origHeight, bmWidth, bmHeight;
-
-	ScaleGestureDetector mScaleDetector;
-	Context context;
 
 	public ZoomableImageView(Context context, AttributeSet attr) {
 		super(context, attr);

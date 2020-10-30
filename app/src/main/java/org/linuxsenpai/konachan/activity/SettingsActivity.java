@@ -34,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-			/*  Perform action based on the setting change. */
+			/*  Perform action based on the setting that has changed. */
 			//getPreferenceManager().findPreference("disk_")
 			return false;
 		}

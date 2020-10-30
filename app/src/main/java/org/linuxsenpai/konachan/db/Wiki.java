@@ -32,7 +32,6 @@ public class Wiki implements Parcelable {
 	@ColumnInfo(typeAffinity = Types.BLOB)
 	public String body;
 	public int updater_id;
-	public boolean locked;
 	public int version;
 
 	public Wiki() {
@@ -40,12 +39,16 @@ public class Wiki implements Parcelable {
 	}
 
 	protected Wiki(Parcel in) {
-
+		uid = in.readInt();
+		created_at = in.readLong();
+		created_at = in.readLong();
+		title = in.readString();
 		body = in.readString();
+		updater_id = in.readInt();
 		version = in.readInt();
 	}
 
-	public Date getDate() {
+	public Date getCreatedDate() {
 		return new Date(this.created_at);
 	}
 
@@ -60,8 +63,12 @@ public class Wiki implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-
+		dest.writeInt(uid);
+		dest.writeLong(created_at);
+		dest.writeLong(updated_at);
+		dest.writeString(title);
 		dest.writeString(body);
+		dest.writeInt(updater_id);
 		dest.writeInt(version);
 	}
 

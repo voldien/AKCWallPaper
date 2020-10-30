@@ -16,21 +16,22 @@ import org.linuxsenpai.konachan.db.Tag;
 
 public class SearchSuggestionPopulateTask extends AsyncTask<String, Void, JSONArray> {
 
-	private SearchSuggestionAdapter adapter;
-	private Context context;
+	private final SearchSuggestionAdapter adapter;
+	private final Context context;
+	private final int numRequestVisableEntries; //TODO add support.
 	private SharedPreferences settings;
-	private int numEntries;
 
-	public SearchSuggestionPopulateTask(Context context, SearchSuggestionAdapter mSearchSuggestionAdapater, int numEntries) {
+	public SearchSuggestionPopulateTask(Context context, SearchSuggestionAdapter mSearchSuggestionAdapater, int numRequestVisableEntries) {
 		this.adapter = mSearchSuggestionAdapater;
 		this.context = context;
-		this.numEntries = numEntries;
+		this.numRequestVisableEntries = numRequestVisableEntries;
 	}
 
 	@Override
 	protected JSONArray doInBackground(String... queryTexts) {
+		/*  */
+		//TODO merge with the meta controller for code cohession.
 		String url = String.format("tag.json?name=%s*&limit=5&page=1&order=count", queryTexts[0]);
-		//Log.d("SearchSuggestionPopulateTask", url);
 		return Network.GetJsonObjectQuery(this.context, url);
 	}
 
@@ -38,6 +39,7 @@ public class SearchSuggestionPopulateTask extends AsyncTask<String, Void, JSONAr
 	protected void onPostExecute(JSONArray result) {
 		super.onPostExecute(result);
 
+		/*  Create cursor for search suggestion.   */
 		if (result != null) {
 			final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID, "name", "count", "id", "type"});
 
@@ -53,8 +55,6 @@ public class SearchSuggestionPopulateTask extends AsyncTask<String, Void, JSONAr
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-
-
 			}
 		}
 	}

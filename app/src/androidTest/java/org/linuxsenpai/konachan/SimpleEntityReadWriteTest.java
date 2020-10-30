@@ -19,7 +19,6 @@ import org.linuxsenpai.konachan.db.PostDao;
 import org.linuxsenpai.konachan.db.TagDao;
 import org.linuxsenpai.konachan.db.WikiDao;
 
-import java.io.IOException;
 import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
@@ -40,12 +39,12 @@ public class SimpleEntityReadWriteTest {
 	}
 
 	@After
-	public void closeDb() throws IOException {
+	public void closeDb() {
 		db.close();
 	}
 
 	@Test
-	public void writeUserAndReadInList() throws Exception {
+	public void writeUserAndReadInList() {
 /*		JSONObject object = loadJsonArray("tag.json").getJSONObject(0);
 		Tag tag = MetaController.convertJson2Tag(object);*/
 
@@ -57,5 +56,10 @@ public class SimpleEntityReadWriteTest {
 		//assertThat(post, equalTo(user));
 	}
 
+
+	@Test
+	public void FavoritePost() {
+
+	}
 
 }

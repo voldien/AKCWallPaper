@@ -20,39 +20,32 @@ import org.linuxsenpai.konachan.db.Post;
 import org.linuxsenpai.konachan.db.Tag;
 import org.linuxsenpai.konachan.db.Wiki;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MetaController {
 	static public final String TAG = "Meta";
+	private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 	public static MetaController controller;
 	private final AtomicInteger page;
-	private ArrayList<JSONArray> postItem;
-	private ArrayList<Integer> pageIndex;
-	private int pageSize = 50;
-	private Context context;
-	private SharedPreferences preferences;
+	private final int pageSize = 50;    //TODO be replaced by the length for each methods.
+	private final Context context;
+	private final SharedPreferences preferences;
 
-	//TODO determine to make a instance supported.
 	private MetaController(@NonNull Context context) {
-		postItem = new ArrayList<>(2);
-		pageIndex = new ArrayList<>(2);
-		pageIndex.add(0);
-		pageIndex.add(1);
-		postItem.add(new JSONArray());
-		postItem.add(new JSONArray());
 		this.page = new AtomicInteger(0);
-
 		this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		AppDatabase database = AppDatabase.getAppDatabase(context);
 		this.context = context;
 	}
 
 	public static MetaController getInstance(@NonNull Context context) {
-		if (controller == null) {
+		if (controller == null)
 			controller = new MetaController(context);
-		}
 		return controller;
 	}
 
@@ -92,8 +85,18 @@ public class MetaController {
 	public static Note convertJson2Note(@NonNull JSONObject object) throws JSONException {
 		Note note = new Note();
 		note.id = object.getInt("id");
-		//TODO convert string formated to unix code.
-//		note.date  = object.getInt("created_at");
+		try {
+			Date date;
+			String date_string = object.getString("created_at");
+			String updated_date_string = object.getString("updated_at");
+			date = formatter.parse(date_string);
+			note.created_date = Objects.requireNonNull(date).getTime();
+			date = formatter.parse(updated_date_string);
+			note.modified_date = Objects.requireNonNull(date).getTime();
+		} catch (ParseException ignored) {
+			note.created_date = -1;
+			note.modified_date = -1;
+		}
 		note.x = object.getInt("x");
 		note.y = object.getInt("y");
 		note.width = object.getInt("width");
@@ -107,40 +110,80 @@ public class MetaController {
 	public static Wiki convertjson2Wiki(@NonNull JSONObject object) throws JSONException {
 		Wiki wiki = new Wiki();
 		wiki.uid = object.getInt("id");
-		//TODO convert string formated to unix code.
-/*		Date created_date = DateFormat.parse(object.getString("created_at"));
-		Date updated_at =DateFormat.parse(object.getString("updated_at"));
-		wiki.created_at  = created_date.getTime();
-		wiki.updated_at =  updated_at.getTime();*/
+		try {
+			Date date;
+			String created_date_string = object.getString("created_at");
+			String updated_date_string = object.getString("updated_at");
+			date = formatter.parse(created_date_string);
+			wiki.created_at = Objects.requireNonNull(date).getTime();
+			date = formatter.parse(updated_date_string);
+			wiki.updated_at = Objects.requireNonNull(date).getTime();
+		} catch (ParseException ignored) {
+			wiki.created_at = -1;
+			wiki.updated_at = -1;
+		}
 		wiki.title = object.getString("title");
 		wiki.body = object.getString("body");
 		wiki.updater_id = object.getInt("updater_id");
-		wiki.locked = object.getBoolean("locked");
 		wiki.version = object.getInt("version");
 		return wiki;
 	}
 
-	private String getSearchOptions() {
+	private String getSearchOptions(Context context) {
 		return "rating:safe&";
 	}
 
+	public List<Tag> loadTags(String pattern, int offset) {
+		/*  Update internal page buffer if out of range.    */
+		int page_index = offset / pageSize;
+		AppDatabase database = AppDatabase.getAppDatabase(context);
 
-	public void loadTags(String pattern, int offset) {
+		List<Tag> tagList = null;
+		synchronized (page) {
+			//if (!lookup.containsKey(page_index)) {
+			if (0 >= Math.max(0, page_index * pageSize - 1)) {
+				/*  Compute post query. */
+				//PreferenceManager.getDefaultSharedPreferences(this.context).getInt()
+				@SuppressLint("DefaultLocale") String queryUrl = String.format("tag.json?name=%s*&limit=%d&page=%d&order=name", pattern, pageSize, page_index);  //TODO add the safe mode and etc.
+				JSONArray array = Network.GetJsonObjectQuery(context, queryUrl);
+				if (array.length() != pageSize) {
+					/*  Last page.  */
+				}
+				page.incrementAndGet();
 
+				/*  Update the database.    */
+				tagList = new ArrayList<>(array.length());
+				for (int i = 0; i < array.length(); i++) {
+					try {
+						JSONObject wiki_json = array.getJSONObject(i);
+						Tag json2Tag = convertJson2Tag(wiki_json);
+						tagList.add(json2Tag);
+					} catch (JSONException ignored) {
+					}
+				}
+				if (BuildConfig.DEBUG) {
+					Log.d(TAG, array.toString());
+					Log.d(TAG, "Tag size: " + tagList.size());
+				}
+				database.tagDao().insertAll(tagList);
+			}
+		}
+		return tagList;
 	}
 
-	public void loadPost(String tag, int offset) {
+	public List<Post> loadPost(String tag, int offset) {
 		/*  Update internal page buffer if out of range.    */
 		int page_index = offset / pageSize;
 		AppDatabase database = AppDatabase.getAppDatabase(context);
 		boolean useCache = preferences.getBoolean(context.getString(R.string.key_use_cache), false);
 
+		List<Post> postList = null;
 		synchronized (page) {
 			//if (!lookup.containsKey(page_index)) {
 			if (offset >= Math.max(0, page_index * pageSize - 1)) {
 				/*  Compute post query. */
 				//PreferenceManager.getDefaultSharedPreferences(this.context).getInt()
-				final String rating = getSearchOptions();
+				final String rating = getSearchOptions(context);
 
 				@SuppressLint("DefaultLocale") String queryUrl = String.format("post.json?tags=%s+%s&limit=%s&page=%d", tag, rating, pageSize, page_index);  //TODO add the safe mode and etc.
 				JSONArray array = Network.GetJsonObjectQuery(context, queryUrl);
@@ -150,7 +193,7 @@ public class MetaController {
 				page.incrementAndGet();
 
 				/*  Update the database.    */
-				List<Post> postList = new ArrayList<>(array.length());
+				postList = new ArrayList<>(array.length());
 				for (int i = 0; i < array.length(); i++) {
 					try {
 						JSONObject post_json = array.getJSONObject(i);
@@ -166,73 +209,161 @@ public class MetaController {
 				database.postDao().insertAll(postList);
 			}
 		}
+		return postList;
 	}
 
-	public List<Note> getNotes(Post postItem) throws JSONException {
-		ArrayList<Note> noteItems = new ArrayList<>();
-		int id = postItem.uid;
-		@SuppressLint("DefaultLocale")
-		String queryUrl = String.format("note.json?post_id=%d", id);  //TODO add the safe mode and etc.
-		JSONArray array = Network.GetJsonObjectQuery(context, queryUrl);
-		for (int i = 0; i < array.length(); i++) {
-			Note item = convertJson2Note(array.getJSONObject(i));
-			noteItems.add(item);
+	public List<Wiki> loadWiki(String tag, int length, int offset) {
+		/*  Update internal page buffer if out of range.    */
+		int page_index = offset / pageSize;
+		AppDatabase database = AppDatabase.getAppDatabase(context);
+		List<Wiki> wikiList = null;
+		synchronized (page) {
+			//if (!lookup.containsKey(page_index)) {
+			if (offset >= Math.max(0, page_index * pageSize - 1)) {
+				/*  Compute post query. */
+				//PreferenceManager.getDefaultSharedPreferences(this.context).getInt()
+				@SuppressLint("DefaultLocale") String queryUrl = String.format("wiki.json?query=%s&limit=%s&page=%d", tag, pageSize, page_index);  //TODO add the safe mode and etc.
+				JSONArray array = Network.GetJsonObjectQuery(context, queryUrl);
+				if (array.length() != pageSize) {
+					/*  Last page.  */
+				}
+				page.incrementAndGet();
+
+				/*  Update the database.    */
+				wikiList = new ArrayList<>(array.length());
+				for (int i = 0; i < array.length(); i++) {
+					try {
+						JSONObject wiki_json = array.getJSONObject(i);
+						Wiki postContainer = convertjson2Wiki(wiki_json);
+						wikiList.add(postContainer);
+					} catch (JSONException ignored) {
+					}
+				}
+				if (BuildConfig.DEBUG) {
+					Log.d(TAG, array.toString());
+					Log.d(TAG, "Wiki size: " + wikiList.size());
+				}
+				database.wikiDao().insertAll(wikiList);
+			}
 		}
-		AppDatabase.getAppDatabase(context).noteDao().insertAll(noteItems);
-		return noteItems;
+		return wikiList;
 	}
 
-	public Cursor<Post> getPostItems(@NonNull String tag) {
-		return new Cursor<>(this, tag, API.POST);
+	public List<Note> loadNotes(Post post) {
+		return loadNotes(post.uid);
 	}
 
-	public Cursor<Tag> getTagItems(@NonNull String tag) {
-		return new Cursor<>(this, tag, API.TAG);
-	}
+	public List<Note> loadNotes(int post_id) {
+		/*  Update internal page buffer if out of range.    */
+		int page_index = 0 / pageSize;
+		AppDatabase database = AppDatabase.getAppDatabase(context);
 
-	public Cursor<Wiki> getWikiItems(@NonNull String tag) {
-		return new Cursor<>(this, tag, API.WIKI);
-	}
+		List<Note> wikiList = null;
+		synchronized (page) {
+			//if (!lookup.containsKey(page_index)) {
+			if (0 >= Math.max(0, page_index * pageSize - 1)) {
+				/*  Compute post query. */
+				//PreferenceManager.getDefaultSharedPreferences(this.context).getInt()
+				@SuppressLint("DefaultLocale")
+				String queryUrl = String.format("note.json?post_id=&%d", post_id);  //TODO add the safe mode and etc.
+				JSONArray array = Network.GetJsonObjectQuery(context, queryUrl);
+				if (array.length() != pageSize) {
+					/*  Last page.  */
+				}
+				page.incrementAndGet();
 
-	public int getCount() {
-		return (page.get() + 2) * pageSize;
+				/*  Update the database.    */
+				wikiList = new ArrayList<>(array.length());
+				for (int i = 0; i < array.length(); i++) {
+					try {
+						JSONObject wiki_json = array.getJSONObject(i);
+						Note postContainer = convertJson2Note(wiki_json);
+						wikiList.add(postContainer);
+					} catch (JSONException ignored) {
+					}
+				}
+				if (BuildConfig.DEBUG) {
+					Log.d(TAG, array.toString());
+					Log.d(TAG, "Wiki size: " + wikiList.size());
+				}
+				database.noteDao().insertAll(wikiList);
+			}
+		}
+		return wikiList;
 	}
 
 	private boolean needUpdate() {
 		return false;
 	}
 
-
 	public Post getPost(@NonNull String tag, int offset) {
+		return getPostList(tag, 1, offset).get(0);
+
+	}
+
+	public List<Post> getPostList(@NonNull String tag, int length, int offset) {
 		if (BuildConfig.DEBUG && offset < 0) {
 			throw new AssertionError("Assertion failed");
 		}
-		Post post = null;
+		List<Post> postList = null;
 
 		/*  */
 		String QueryTag = String.format("%%%s%%", tag);
 		boolean useCache = preferences.getBoolean(context.getString(R.string.key_use_cache), false);
 		if (useCache) {
 			if (tag.length() > 0)
-				post = AppDatabase.getAppDatabase(context).postDao().getByTag(QueryTag, offset);
+				postList = AppDatabase.getAppDatabase(context).postDao().getByTag(QueryTag, length, offset);
 			else
-				post = AppDatabase.getAppDatabase(context).postDao().getOffset(offset);
+				postList = AppDatabase.getAppDatabase(context).postDao().getOffset(length, offset);
 		}
 
-		if (post == null) {
-			loadPost(tag, offset);
+		if (postList == null) {
+			postList = loadPost(tag, offset);
 
 			/*  Second attempt. */
 			//TODO improve the logic to prevent calling the same code block twice!.
-			if (tag.length() > 0)
-				post = AppDatabase.getAppDatabase(context).postDao().getByTag(QueryTag, offset);
+/*			if (tag.length() > 0)
+				postList = AppDatabase.getAppDatabase(context).postDao().getByTag(QueryTag,length, offset);
 			else
-				post = AppDatabase.getAppDatabase(context).postDao().getOffset(offset);
+				postList = AppDatabase.getAppDatabase(context).postDao().getOffset(length, offset);*/
 
-			if (post == null)
+			if (postList == null)
 				throw new RuntimeException(String.format("Could not find post: %s offset: %d", tag, offset));
 		}
-		return post;
+		return postList;
+	}
+
+	public List<Tag> getSearchTag(String query, int length, int offset) {
+		if (BuildConfig.DEBUG && offset < 0) {
+			throw new AssertionError("Assertion failed");
+		}
+		List<Tag> tagList = null;
+
+		/*  */
+		String QueryTag = String.format("%%%s%%", query);
+		boolean useCache = preferences.getBoolean(context.getString(R.string.key_use_cache), false);
+		if (useCache) {
+			if (query.length() > 0)
+				tagList = AppDatabase.getAppDatabase(context).tagDao().getBySimilarName(QueryTag, length, offset);
+			else
+				tagList = AppDatabase.getAppDatabase(context).tagDao().getOffset(length, offset);
+		}
+
+		if (tagList == null) {
+			tagList = loadTags(query, offset);
+			/*  Second attempt. */
+			//TODO improve the logic to prevent calling the same code block twice!.
+/*
+			if (query.length() > 0)
+				tagList = AppDatabase.getAppDatabase(context).tagDao().getBySimilarName(QueryTag, length, offset);
+			else
+				tagList = AppDatabase.getAppDatabase(context).tagDao().getOffset(length, offset);
+*/
+
+			if (tagList == null)
+				throw new RuntimeException(String.format("Could not find tags: %s length: %d offset: %d", query, length, offset));
+		}
+		return tagList;
 	}
 
 	public Tag getTag(@NonNull String tagkey) throws JSONException {
@@ -255,5 +386,55 @@ public class MetaController {
 				throw new RuntimeException(String.format("Failed fetching tag: %s", tagkey));
 		}
 		return tag;
+	}
+
+	public List<Note> getNotes(Post post) {
+		return getNotes(post.uid);
+	}
+
+	public List<Note> getNotes(int postID) {
+
+		List<Note> notes = null;
+
+		boolean useCache = preferences.getBoolean(context.getString(R.string.key_use_cache), false);
+		if (useCache) {
+			notes = AppDatabase.getAppDatabase(context).noteDao().loadAllByIds(postID);
+		}
+		if (notes == null) {
+			notes = loadNotes(postID);
+			//notes = AppDatabase.getAppDatabase(context).noteDao().loadAllByIds(postID);
+
+			if (notes == null)
+				throw new RuntimeException(String.format("Could not find notes for post: %d", postID));
+		}
+		return notes;
+	}
+
+	public List<Wiki> getWikiItems(String tag, int length, int offset) {
+		List<Wiki> wikiList = null;
+
+		/*  */
+		String QueryTag = String.format("%%%s%%", tag);
+		boolean useCache = preferences.getBoolean(context.getString(R.string.key_use_cache), false);
+		if (useCache) {
+			if (tag.length() > 0)
+				wikiList = AppDatabase.getAppDatabase(context).wikiDao().loadAllBySimilarName(QueryTag, length, offset);
+			else
+				wikiList = AppDatabase.getAppDatabase(context).wikiDao().getOffset(length, offset);
+		}
+
+		if (wikiList == null) {
+			wikiList = loadWiki(tag, length, offset);
+
+/*			if (tag.length() > 0)
+				wiki = AppDatabase.getAppDatabase(context).wikiDao().loadAllBySimilarName(QueryTag, length, offset);
+			else
+				wiki = AppDatabase.getAppDatabase(context).wikiDao().getOffset(length, offset);*/
+
+			if (wikiList == null)
+				throw new RuntimeException(String.format("Could not find wiki: %s offset: %d", tag, offset));
+		}
+		return wikiList;
+
 	}
 }

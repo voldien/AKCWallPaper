@@ -12,7 +12,7 @@ import org.linuxsenpai.konachan.db.AppDatabase;
 public class KonaChanApp extends Application {
 
 	public static void allowDiskReads(Runnable runnable) {
-		StrictMode.ThreadPolicy oldThreadPolicy = null;
+		StrictMode.ThreadPolicy oldThreadPolicy;
 		oldThreadPolicy = StrictMode.getThreadPolicy();
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder(oldThreadPolicy).permitDiskReads().build());
 	}
@@ -50,11 +50,7 @@ public class KonaChanApp extends Application {
 			);
 
 		}
-		try {
-			//settings = Settings.createSetting(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/*  Init database.  */
 		AppDatabase.getAppDatabase(this.getBaseContext());
 	}
 }

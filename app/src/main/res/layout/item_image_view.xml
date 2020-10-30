@@ -13,7 +13,6 @@
 		android:adjustViewBounds="true"
 		android:contentDescription="@string/image_desc"
 		android:scaleType="centerCrop"
-		android:transitionName="profile"
 		android:visibility="visible"
 		app:layout_constraintDimensionRatio="@string/header_image_ratio"
 		app:layout_constraintEnd_toEndOf="parent"

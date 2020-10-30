@@ -1,7 +1,6 @@
 package org.linuxsenpai.konachan;
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiManager;
 
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -9,7 +8,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,6 +22,7 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.pressBack;
 import static androidx.test.espresso.action.ViewActions.swipeDown;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.swipeRight;
 import static androidx.test.espresso.action.ViewActions.swipeUp;
 import static androidx.test.espresso.action.ViewActions.typeText;
@@ -53,7 +52,7 @@ public class UITest {
 
 
 	@Test
-	public void NavigatePost_OrientationChange(){
+	public void NavigatePost_OrientationChange() {
 		onView(withId(R.id.recycler_view)).perform(swipeUp());
 		onView(withId(R.id.recycler_view)).perform(swipeUp());
 		onView(withId(R.id.recycler_view)).perform(swipeUp());
@@ -65,13 +64,12 @@ public class UITest {
 		onView(withId(R.id.recycler_view)).perform(swipeUp());
 		onView(withId(R.id.recycler_view)).perform(swipeUp());
 		onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-		onView(isRoot()).perform( swipeRight(), swipeRight(), swipeRight(), swipeRight(), swipeRight(), swipeRight());
+		onView(isRoot()).perform(swipeRight(), swipeRight(), swipeRight(), swipeRight(), swipeRight(), swipeRight());
 	}
 
 	public void CloseOnBack() {
 
 	}
-
 
 
 	@Test
@@ -98,7 +96,7 @@ public class UITest {
 	}
 
 	@Test
-	public void TagItemInvokeWikiView(){
+	public void TagItemInvokeWikiView() {
 		onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 		onView(withId(R.id.fragment_single_view)).perform(swipeUp());
 		onView(withId(R.id.fragment_list_tags)).perform(swipeUp());
@@ -117,28 +115,33 @@ public class UITest {
 	}
 
 	@Test
-	public void RefreshPostView(){
+	public void RefreshPostView() {
 		onView(withId(R.id.swiperefresh)).perform(swipeDown());
 	}
 
 	@Test
-	public void ScrollImageViewAsWhole(){
+	public void ScrollImageViewAsWhole() {
 		onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(0));
 		onView(isRoot()).perform(swipeUp());
 		onView(isRoot()).perform(swipeUp());
 	}
 
 	@Test
-	public void NavigateFavorite(){
+	public void NavigateFavorite() {
+		onView(withId(R.id.pager)).perform(swipeLeft(), swipeLeft(), swipeLeft());
+		//TODO add assert to check if this is the favorite fragment on the current pager.
+		//onView(withId(R.id.pager)).check(matches(is))
+	}
+
+	@Test
+	public void NavigateHistory() {
+		onView(withId(R.id.pager)).perform(swipeLeft(), swipeLeft(), swipeLeft(), swipeLeft());
 
 	}
-	@Test
-	public void NavigateHistory(){
 
-	}
 	@Test
-	public void NavigateWikiPage(){
-
+	public void NavigateWikiPage() {
+		onView(withId(R.id.pager)).perform(swipeLeft(), swipeLeft());
 	}
 
 	@Test
@@ -152,21 +155,27 @@ public class UITest {
 	}
 
 	@Test
-	public void SearchView_SelectSuggestion(){
+	public void SearchView_SelectSuggestion() {
 
 	}
 
 	@Test
-	public void SetImageFavorite(){
+	public void SetImageFavorite() {
 
 	}
 
 	@Test
-	public void TabNavigation(){
+	public void TabNavigation() {
 
 	}
 
-	public void SelectWikiPage(){
+	@Test
+	public void SelectWikiPage() {
+
+	}
+
+	@Test
+	public void SetImageBackgroundImage() {
 
 	}
 
@@ -180,18 +189,6 @@ public class UITest {
 		onView(withId(R.id.recycler_view)).perform(swipeUp());
 		onView(withId(R.id.recycler_view)).perform(swipeUp());
 		onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(35));
-	}
-
-	@Test
-	public void changeText_sameActivity() {
-		// Type text and then press the button.
-		onView(withId(R.id.action_searchview))
-				.perform(typeText(stringToBetyped), closeSoftKeyboard());
-		//onView(withId(R.id.changeTextBt)).perform(click());
-
-		// Check that the text was changed.
-		//onView(withId(R.id.textToBeChanged))
-		//		.check(matches(withText(stringToBetyped)));
 	}
 
 	@Test

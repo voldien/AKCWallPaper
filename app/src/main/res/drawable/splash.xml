@@ -5,7 +5,7 @@
 	<item>
 		<bitmap
 			android:gravity="center"
-			android:src="@drawable/ic_get_app" />
+			android:src="@drawable/ackwallpaper_slash" />
 	</item>
 
 </layer-list>

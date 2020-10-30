@@ -18,9 +18,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InformationViewApdater extends BaseAdapter {
-	private Post post;
-	private List<String> keys;
-	private Pattern pattern;
+	private final Post post;
+	private final List<String> keys;
+	private final Pattern pattern;
 
 	public InformationViewApdater(Post post, List<String> keys) {
 		this.post = post;
@@ -54,8 +54,7 @@ public class InformationViewApdater extends BaseAdapter {
 		TextView textViewValue = view.findViewById(R.id.textviewvalue);
 
 		String key = String.format("%s:", keys.get(position));
-		String value = "";
-
+		String value;
 		//TODO improve the logic for fetching the correct value.
 		switch (position) {
 			case 0:
@@ -68,7 +67,7 @@ public class InformationViewApdater extends BaseAdapter {
 				value = post.author;
 				break;
 			case 3:
-				value = post.sampleUrl;
+				value = post.source;
 				break;
 			default:
 			case 4:

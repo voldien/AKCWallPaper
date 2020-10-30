@@ -4,15 +4,18 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	android:orientation="vertical"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	tools:showIn="@layout/app_bar_main">
 
 
 	<com.google.android.material.tabs.TabLayout
 		android:id="@+id/tab_layout"
 		android:layout_width="match_parent"
-		android:layout_height="25dp" />
+		android:layout_height="25dp"
+		app:tabMode="auto"
+		app:tabSelectedTextColor="@color/white"
+		app:tabTextColor="?attr/tabTextColor" />
 
 	<androidx.viewpager2.widget.ViewPager2
 		android:id="@+id/pager"
@@ -20,7 +23,7 @@
 		android:layout_height="0dp"
 		android:layout_weight="1" />
 
-<!--	<androidx.fragment.app.FragmentContainerView
+	<!--	<androidx.fragment.app.FragmentContainerView
 		android:id="@+id/main_fragment"
 		android:name="org.linuxsenpai.konachan.fragment.DummyFragment"
 		android:layout_width="match_parent"

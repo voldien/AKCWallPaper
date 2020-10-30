@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity
 public class Post implements Parcelable {
 
@@ -37,17 +39,6 @@ public class Post implements Parcelable {
 	public boolean hasChildren;
 	public int parent_id;
 
-	//TOOD remove
-/*	public ArrayList<TagItem> GetTagObjectList() throws JSONException {
-		ArrayList<TagItem> tagItemArrayList = new ArrayList<>();
-		String tags = GetTags();
-		String[] taglist = TextUtils.split(tags, " ");
-		for (String tag : taglist) {
-			JSONObject object = new JSONObject();
-			tagItemArrayList.add(new TagItem(null));
-		}
-		return tagItemArrayList;
-	}*/
 	public String rating;
 
 	private Post(Parcel in) {
@@ -70,6 +61,10 @@ public class Post implements Parcelable {
 
 	public Post() {
 
+	}
+
+	public Date getCreateDate() {
+		return new Date(this.created_at);
 	}
 
 	public String[] GetTagObjectList() {

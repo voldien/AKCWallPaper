@@ -57,7 +57,7 @@ public class APIUnitTest {
 	}
 
 	//TODO resolve date creation.
-	@Test(expected = Test.None.class)
+	@Test()
 	public void Parse_Post_Item_Correctly() throws JSONException, IOException {
 		JSONObject object = loadJsonArray("post.json").getJSONObject(0);
 		Post post = MetaController.convertJson2Post(object);
@@ -74,7 +74,7 @@ public class APIUnitTest {
 		Assert.assertEquals(post.rating, "q");
 	}
 
-	@Test(expected = Test.None.class)
+	@Test()
 	public void Parse_Tag_Item_Correctly() throws JSONException, IOException {
 		JSONObject object = loadJsonArray("tag.json").getJSONObject(0);
 		Tag tag = MetaController.convertJson2Tag(object);
@@ -88,7 +88,7 @@ public class APIUnitTest {
 		Assert.assertEquals(tag.getType(), TagType.General);
 	}
 
-	@Test(expected = Test.None.class)
+	@Test()
 	public void Parse_Note_Item_Correctly() throws JSONException, IOException {
 		JSONObject object = loadJsonArray("note.json").getJSONObject(0);
 		Note note = MetaController.convertJson2Note(object);
@@ -104,7 +104,7 @@ public class APIUnitTest {
 		Assert.assertEquals(note.version, 1);
 	}
 
-	@Test(expected = Test.None.class)
+	@Test()
 	public void Parse_Wiki_Item_Correctly() throws IOException, JSONException {
 		JSONObject object = loadJsonArray("wiki.json").getJSONObject(0);
 		Wiki wiki = MetaController.convertjson2Wiki(object);
