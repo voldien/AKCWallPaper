@@ -116,7 +116,6 @@ public class APIUnitTest {
 		Assert.assertEquals(wiki.updated_at, 0);
 		Assert.assertEquals(wiki.title, "alice_in_musicland_(vocaloid)");
 		Assert.assertEquals(wiki.updater_id, 96529);
-		Assert.assertFalse(wiki.locked);
 		Assert.assertEquals(wiki.version, 1);
 	}
 }

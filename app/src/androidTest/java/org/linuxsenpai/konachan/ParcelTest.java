@@ -119,7 +119,6 @@ public class ParcelTest {
 		Assert.assertEquals(wiki.title, wiki1.title);
 		Assert.assertEquals(wiki.body, wiki1.body);
 		Assert.assertEquals(wiki.updater_id, wiki1.updater_id);
-		Assert.assertEquals(wiki.locked, wiki1.locked);
 		Assert.assertEquals(wiki.version, wiki1.version);
 
 	}

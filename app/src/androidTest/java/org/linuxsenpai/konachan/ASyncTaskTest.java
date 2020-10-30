@@ -33,9 +33,5 @@ public class ASyncTaskTest {
 	@Test
 	public void LoadImage_download() {
 		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
-		ImageView imageView = new ImageView(appContext);
-		DownloadImageViewTask downloadImageViewTask = new DownloadImageViewTask(imageView);
-		downloadImageViewTask.execute("https://konachan.net/data/preview/fc/67/fc6726cdbd392785aee01ab4f7757caa.jpg");
 	}
 }
