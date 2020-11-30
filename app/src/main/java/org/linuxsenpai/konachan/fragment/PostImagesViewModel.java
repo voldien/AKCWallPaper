@@ -18,6 +18,7 @@ public class PostImagesViewModel extends ViewModel {
 	private MutableLiveData<Integer> coloumns;
 	private MutableLiveData<String> searchQuery;
 	private MutableLiveData<List<Post>> liveListData;
+	static final int page_size = 25;
 
 	public PostImagesViewModel() {
 		isLoading = new AtomicBoolean(false);
@@ -42,15 +43,10 @@ public class PostImagesViewModel extends ViewModel {
 			this.searchQuery.setValue(searchQuery.getValue());
 	}
 
-	/*	public void search(String query) {
-	 *//*  TODO determine if need to update the database.  *//*
-		this.searchQuery.setValue(query);
-	}*/
-
 	public void loadPostOffset(Context context, int offset) {
 		if (!isLoading.get()) {
 			isLoading.set(true);
-			FetchPostItemsTask fetchDisplayImageHolderItem = new FetchPostItemsTask(context, this, 25, offset);
+			FetchPostItemsTask fetchDisplayImageHolderItem = new FetchPostItemsTask(context, this, page_size, offset);
 			fetchDisplayImageHolderItem.execute(searchQuery.getValue());
 		}
 		//TODO add so it is called only once.
