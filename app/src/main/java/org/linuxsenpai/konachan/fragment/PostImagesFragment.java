@@ -1,5 +1,6 @@
 package org.linuxsenpai.konachan.fragment;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -314,6 +315,12 @@ public class PostImagesFragment extends SearchableListFragment {
 		postponeEnterTransition();
 
 		return view;
+	}
+
+	@Override
+	public void onDataReceived(Bundle searcBundle) {
+		super.onDataReceived(searcBundle);
+		this.viewModel.loadPost(searcBundle.getString(SearchManager.QUERY), false);
 	}
 
 	private void prepareTransitions() {

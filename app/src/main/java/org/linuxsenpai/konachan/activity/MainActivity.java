@@ -58,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
 	public SwipeRefreshLayout swipeRefreshLayout;
 	private AppBarConfiguration mAppBarConfiguration;
 
+	private OnAboutDataReceivedListener mAboutDataListener;
+
+	public interface OnAboutDataReceivedListener {
+		void onDataReceived(Bundle searcBundle);
+	}
+
+	public void setAboutDataListener(OnAboutDataReceivedListener listener) {
+		this.mAboutDataListener = listener;
+	}
+
 	private void initConfigurationFeatures() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -256,30 +266,13 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	protected void handleIntent(Intent intent) {
-
-/*		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
-			List<Fragment> fragments = getSupportFragmentManager().getFragments();
-			if (fragments.size() > 1) {
-				*//*  Clear all prior fragment.   *//*
-				for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-					getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+			Bundle bundle = intent.getBundleExtra(SearchManager.APP_DATA);
 
-				}
-			} else {
-				if (fragments.get(0).getTag() != "") {
-
-				}
-			}
-
-			FragmentManager fragmentManager = getSupportFragmentManager();
-			FragmentTransaction transaction = fragmentManager.beginTransaction();
-			transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-			transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim, R.anim.nav_default_pop_enter_anim, R.anim.nav_default_pop_exit_anim);
-			//transaction.replace(R.id.main_fragment, PostRecycleImageFragment.newInstance(query, 1, null));
-			transaction.addToBackStack(null);
-			transaction.commit();*//**//*
-		}*/
+			if(this.mAboutDataListener != null)
+				this.mAboutDataListener.onDataReceived(bundle);
+		}
 	}
 
 	@Override
