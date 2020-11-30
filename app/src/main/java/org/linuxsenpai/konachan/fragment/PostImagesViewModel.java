@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class PostImagesViewModel extends ViewModel {
 
 	private final AtomicBoolean isLoading;
-	private MutableLiveData<Integer> coloumns;
 	private MutableLiveData<String> searchQuery;
 	private MutableLiveData<List<Post>> liveListData;
 	static final int page_size = 25;

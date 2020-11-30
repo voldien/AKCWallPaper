@@ -299,34 +299,35 @@ public class SingleViewActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 
-		switch (id) {
-			case R.id.action_wallpaper:
-				ImageView imageView = (ImageView) imageSwitcher.getCurrentView();
-				BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-				WallPaperUtil.setWallpaper(this, bitmapDrawable.getBitmap());
-				return true;
-			case R.id.action_set_favorite:
-				boolean isFavorite = sharedPreference.isPostFavorite(getApplicationContext(), mViewModel.getPost().getValue());
-				if (!isFavorite) {
-					item.setIcon(R.drawable.ic_turned_in_black_24dp);
-					sharedPreference.addFavorite(this.getApplicationContext(), mViewModel.getPost().getValue());
-					//Snackbar.make(getView(), getResources().getText(R.string.add_favr), Snackbar.LENGTH_SHORT).show();
-				} else {
-					item.setIcon(R.drawable.ic_turned_in_not_black_24dp);
-					sharedPreference.removeFavorite(this.getApplicationContext(), mViewModel.getPost().getValue());
-					//Snackbar.make(this.getBaseContext(), getResources().getText(R.string.remove_favr), Snackbar.LENGTH_SHORT).show();
-				}
-				return true;
-			case R.id.action_download:
-				//TODO resolve along with the task sch.
-				//WallPaperUtil.downloadImage(this, this.mViewModel.getPost().getValue());
-				return true;
-			case R.id.action_information:
-				displayInformationFragment();
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
+		if(id == R.id.action_wallpaper){
+			ImageView imageView = (ImageView) imageSwitcher.getCurrentView();
+			BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+			WallPaperUtil.setWallpaper(this, bitmapDrawable.getBitmap());
+			return true;
+		}else if(id == R.id.action_set_favorite){
+			boolean isFavorite = sharedPreference.isPostFavorite(getApplicationContext(), mViewModel.getPost().getValue());
+			if (!isFavorite) {
+				item.setIcon(R.drawable.ic_turned_in_black_24dp);
+				sharedPreference.addFavorite(this.getApplicationContext(), mViewModel.getPost().getValue());
+				//Snackbar.make(getView(), getResources().getText(R.string.add_favr), Snackbar.LENGTH_SHORT).show();
+			} else {
+				item.setIcon(R.drawable.ic_turned_in_not_black_24dp);
+				sharedPreference.removeFavorite(this.getApplicationContext(), mViewModel.getPost().getValue());
+				//Snackbar.make(this.getBaseContext(), getResources().getText(R.string.remove_favr), Snackbar.LENGTH_SHORT).show();
+			}
+			return true;
 		}
+		else if(id == R.id.action_download){
+			//TODO resolve along with the task sch.
+			//WallPaperUtil.downloadImage(this, this.mViewModel.getPost().getValue());
+			return true;
+		}
+		else if(id == R.id.action_information){
+			displayInformationFragment();
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void displayInformationFragment() {
@@ -338,6 +339,10 @@ public class SingleViewActivity extends AppCompatActivity {
 			transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
 			transaction.replace(R.id.single_view_fragment_information_container, informationFragment);
+
+/*			findViewById(R.id.single_view_fragment_information_container).setVisibility(View.VISIBLE);
+			findViewById(R.id.image_switcher).setVisibility(View.VISIBLE)*/;
+
 			transaction.addToBackStack(null);
 			transaction.commit();/**/
 		} catch (NullPointerException ignored) {

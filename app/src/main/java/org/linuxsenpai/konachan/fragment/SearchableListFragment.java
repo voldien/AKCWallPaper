@@ -12,11 +12,18 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.linuxsenpai.konachan.R;
+import org.linuxsenpai.konachan.activity.MainActivity;
 
 //TODO rename later
-public abstract class SearchableListFragment extends Fragment {
+public abstract class SearchableListFragment extends Fragment implements MainActivity.OnAboutDataReceivedListener {
 
 	protected SearchView searchView;
+
+	@Override
+	public void onDataReceived(Bundle searcBundle) {
+
+	}
+
 	protected SwipeRefreshLayout refreshview;
 	protected SearchView.OnQueryTextListener searchQueryListener;
 

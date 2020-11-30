@@ -210,19 +210,12 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter.Po
 
 								AppCompatActivity appCompatActivity = (AppCompatActivity) imageView.getContext();
 								BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-								switch (item.getItemId()) {
-									case R.id.action_download_image:
-										WallPaperUtil.saveBitmap(appCompatActivity, bitmapDrawable.getBitmap(), post);
-										break;
-									case R.id.action_set_wallpaper:
-
-										WallPaperUtil.setWallpaper(appCompatActivity, bitmapDrawable.getBitmap());
-										break;
-									case R.id.action_favorite:
-										setFavorite(true);
-										break;
-									default:
-										break;
+								if(item.getItemId() == R.id.action_download){
+									WallPaperUtil.saveBitmap(appCompatActivity, bitmapDrawable.getBitmap(), post);
+								}else if(item.getItemId() == R.id.action_set_wallpaper){
+									WallPaperUtil.setWallpaper(appCompatActivity, bitmapDrawable.getBitmap());
+								}else if(item.getItemId() == R.id.action_favorite){
+									setFavorite(true);
 								}
 								return true;
 							}

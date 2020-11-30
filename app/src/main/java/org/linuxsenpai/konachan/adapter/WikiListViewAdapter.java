@@ -87,6 +87,7 @@ public class WikiListViewAdapter extends RecyclerView.Adapter<WikiListViewAdapte
 							FragmentTransaction transaction = fragmentManager.beginTransaction();
 							transaction.setReorderingAllowed(true); //TODO setAllowOptimization before 26.1.0
 
+							/*  Create object.  */
 							transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 							transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim, R.anim.nav_default_pop_enter_anim, R.anim.nav_default_pop_exit_anim);
 							transaction.add(WikiPageFragment.newInstance(wiki), "");
