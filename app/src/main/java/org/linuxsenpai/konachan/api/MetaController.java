@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MetaController {
 	static public final String TAG = "Meta";
-	private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 	public static MetaController controller;
 	private final AtomicInteger page;
 	private final int pageSize = 20;    //TODO be replaced by the length for each methods.

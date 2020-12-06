@@ -21,11 +21,6 @@ import java.io.InputStreamReader;
 
 public class APIUnitTest {
 
-	@Test
-	public void APISearch_() {
-
-	}
-
 	//TODO make part of the application and reference it.
 	@NotNull
 	private String loadFileString(String localResource) throws IOException {
@@ -49,11 +44,6 @@ public class APIUnitTest {
 	@Contract("_ -> new")
 	private JSONArray loadJsonArray(String localResource) throws IOException, JSONException {
 		return new JSONArray(loadFileString(localResource));
-	}
-
-	@Test
-	public void Parse_JSON_No_Throw() {
-
 	}
 
 	//TODO resolve date creation.
@@ -102,6 +92,8 @@ public class APIUnitTest {
 		Assert.assertEquals(note.post_id, 312859);
 		Assert.assertEquals(note.body, "Uraraka Ochako\n(Boku no Hero Academia)");
 		Assert.assertEquals(note.version, 1);
+		Assert.assertEquals(note.created_date, 1597247392334L);
+		Assert.assertEquals(note.modified_date, 1597247392334L);
 	}
 
 	@Test()
@@ -112,8 +104,8 @@ public class APIUnitTest {
 
 		/*  */
 		Assert.assertEquals(wiki.uid, 905);
-		//Assert.assertEquals(wiki.created_at, 93238);
-		Assert.assertEquals(wiki.updated_at, 0);
+		Assert.assertEquals(wiki.created_at, 1431560334562L);
+		Assert.assertEquals(wiki.updated_at, 1431560334562L);
 		Assert.assertEquals(wiki.title, "alice_in_musicland_(vocaloid)");
 		Assert.assertEquals(wiki.updater_id, 96529);
 		Assert.assertEquals(wiki.version, 1);
