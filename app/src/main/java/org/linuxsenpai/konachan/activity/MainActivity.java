@@ -60,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
 	private OnAboutDataReceivedListener mAboutDataListener;
 
-	public interface OnAboutDataReceivedListener {
-		void onDataReceived(Bundle searcBundle);
-	}
-
 	public void setAboutDataListener(OnAboutDataReceivedListener listener) {
 		this.mAboutDataListener = listener;
 	}
@@ -270,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			Bundle bundle = intent.getBundleExtra(SearchManager.APP_DATA);
 
-			if(this.mAboutDataListener != null)
+			if (this.mAboutDataListener != null)
 				this.mAboutDataListener.onDataReceived(bundle);
 		}
 	}
@@ -308,6 +304,10 @@ public class MainActivity extends AppCompatActivity {
 	protected void displaySettingActivity() {
 		Intent settingIntent = new Intent(this, SettingsActivity.class);
 		this.startActivity(settingIntent);
+	}
+
+	public interface OnAboutDataReceivedListener {
+		void onDataReceived(Bundle searcBundle);
 	}
 
 }

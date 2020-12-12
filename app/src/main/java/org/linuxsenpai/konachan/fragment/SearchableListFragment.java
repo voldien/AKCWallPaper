@@ -18,14 +18,13 @@ import org.linuxsenpai.konachan.activity.MainActivity;
 public abstract class SearchableListFragment extends Fragment implements MainActivity.OnAboutDataReceivedListener {
 
 	protected SearchView searchView;
+	protected SwipeRefreshLayout refreshview;
+	protected SearchView.OnQueryTextListener searchQueryListener;
 
 	@Override
 	public void onDataReceived(Bundle searcBundle) {
 
 	}
-
-	protected SwipeRefreshLayout refreshview;
-	protected SearchView.OnQueryTextListener searchQueryListener;
 
 	protected void detachSearchView() {
 		if (this.searchView != null)

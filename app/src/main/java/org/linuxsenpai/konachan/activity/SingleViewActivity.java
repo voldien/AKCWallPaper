@@ -299,12 +299,12 @@ public class SingleViewActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 
-		if(id == R.id.action_wallpaper){
+		if (id == R.id.action_wallpaper) {
 			ImageView imageView = (ImageView) imageSwitcher.getCurrentView();
 			BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
 			WallPaperUtil.setWallpaper(this, bitmapDrawable.getBitmap());
 			return true;
-		}else if(id == R.id.action_set_favorite){
+		} else if (id == R.id.action_set_favorite) {
 			boolean isFavorite = sharedPreference.isPostFavorite(getApplicationContext(), mViewModel.getPost().getValue());
 			if (!isFavorite) {
 				item.setIcon(R.drawable.ic_turned_in_black_24dp);
@@ -316,13 +316,11 @@ public class SingleViewActivity extends AppCompatActivity {
 				//Snackbar.make(this.getBaseContext(), getResources().getText(R.string.remove_favr), Snackbar.LENGTH_SHORT).show();
 			}
 			return true;
-		}
-		else if(id == R.id.action_download){
+		} else if (id == R.id.action_download) {
 			//TODO resolve along with the task sch.
 			//WallPaperUtil.downloadImage(this, this.mViewModel.getPost().getValue());
 			return true;
-		}
-		else if(id == R.id.action_information){
+		} else if (id == R.id.action_information) {
 			displayInformationFragment();
 			return true;
 		}
@@ -341,7 +339,8 @@ public class SingleViewActivity extends AppCompatActivity {
 			transaction.replace(R.id.single_view_fragment_information_container, informationFragment);
 
 /*			findViewById(R.id.single_view_fragment_information_container).setVisibility(View.VISIBLE);
-			findViewById(R.id.image_switcher).setVisibility(View.VISIBLE)*/;
+			findViewById(R.id.image_switcher).setVisibility(View.VISIBLE)*/
+			;
 
 			transaction.addToBackStack(null);
 			transaction.commit();/**/
